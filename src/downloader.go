@@ -4,17 +4,21 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"strings"
+
+	"github.com/walla-chollo/src/verticals"
 )
 
 type Downloader struct {
-	Search   string   `json:"search"`   //Search query
-	Category string   `json:"category"` //Categories: cars (100), etc..
-	Order    string   `json:"order"`    //Order by: most_relevance, etc
-	Limit    int      `json:"limit"`    //Number of results to return
-	Offset   int      `json:"offset"`   //Offset of the results
-	Location Location `json:"location"` //Location of the search
+	Search    string        `json:"search"`     //Search query
+	Category  string        `json:"category"`   //Categories: cars (100), etc..
+	Order     string        `json:"order"`      //Order by: most_relevance, etc
+	Limit     int           `json:"limit"`      //Number of results to return
+	Offset    int           `json:"offset"`     //Offset of the results
+	Location  Location      `json:"location"`   //Location of the search
+	CarFields verticals.Car `json:"car_fields"` //Car to search
 }
 
 type Location struct {
@@ -45,6 +49,19 @@ func (dow *Downloader) SetSearch(search string) *Downloader {
 	return dow
 }
 
+func (dow *Downloader) SetCarParams(search verticals.Car) *Downloader {
+	dow.CarFields.Brand = search.Brand
+	dow.CarFields.Model = search.Model
+	dow.CarFields.Year = search.Year
+	dow.CarFields.Version = search.Version
+	dow.CarFields.Km = search.Km
+	dow.CarFields.Engine = search.Engine
+	dow.CarFields.Gearbox = search.Gearbox
+	dow.CarFields.Price = search.Price
+
+	return dow
+}
+
 func (dow *Downloader) SetCategory(Category string) *Downloader {
 	dow.Category = Category
 	return dow
@@ -66,9 +83,10 @@ func (dow *Downloader) SetOffset(Offset int) *Downloader {
 }
 
 func (dow *Downloader) GetWallapopContent() WallapopRequestResponse {
-	url := fmt.Sprintf("https://api.wallapop.com/api/v3/cars/search?keywords=%s&filters_source=search_box&latitude=%f&start=%d&order_by=most_relevance&step=2&category_ids=100&longitude=%f&max_sale_price=3200&max_year=2014",
-		dow.Search, dow.Location.Latitude, 20, dow.Location.Longitude)
+	url := fmt.Sprintf("https://api.wallapop.com/api/v3/cars/search?keywords=%s&filters_source=search_box&latitude=%f&start=%d&order_by=most_relevance&step=2&category_ids=%s&longitude=%f&max_sale_price=%d&max_year=%d&max_km=%d",
+		dow.Search, dow.Location.Latitude, 20, dow.Category, dow.Location.Longitude, dow.CarFields.Price, dow.CarFields.Year, dow.CarFields.Km)
 
+	log.Println(url)
 	// Make the HTTP GET request
 	resp, err := http.Get(url)
 	if err != nil {
