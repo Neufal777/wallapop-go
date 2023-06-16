@@ -6,12 +6,12 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-
-	"github.com/walla-chollo/config"
 )
 
+const HERE_API_KEY = "AezPb11S9-e0_qFOWr7UaYnzzBCG0M2doKE05XbZXew"
+
 func HereGeoCoordinates(q string) Location {
-	apiKey := config.HERE_API_KEY
+	apiKey := HERE_API_KEY
 
 	query := url.QueryEscape(q)
 	url := fmt.Sprintf("https://geocode.search.hereapi.com/v1/geocode?q=%s&apiKey=%s", query, apiKey)

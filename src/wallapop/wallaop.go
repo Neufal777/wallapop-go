@@ -1,116 +1,112 @@
 package wallapop
 
-import "github.com/walla-chollo/src/location"
+import (
+	"github.com/walla-chollo/utils"
+)
 
-type Image struct {
-	Original       string `json:"original"`
-	Xsmall         string `json:"xsmall"`
-	Small          string `json:"small"`
-	Large          string `json:"large"`
-	Medium         string `json:"medium"`
-	Xlarge         string `json:"xlarge"`
-	OriginalWidth  int    `json:"original_width"`
-	OriginalHeight int    `json:"original_height"`
+// ├── Setters  for 'wallapop'/
+// │   ├── SetWallapopItems()
+// │   ├── SetWallapopReviews()
+// │   ├── SetReviewsAverage()
+// │   ├── SetWallapopProfileInfo()
+// │   ├── SetFormattedCreationDate()
+// │   └── SetWallapopCompleteProfile()
+// └── Getters  for 'wallapop'/
+//     ├── GetReviewsAverage()
+//     ├── GetWallapopProfileInfo()
+//     ├── GetWallapopItems()
+//     └── GetWallapopReviews()
+
+type Wallapop struct {
+	WallapopProfile WallapopProfileInfo
+	WallapopItems   WallapopItems
+	WallapopReviews WallapopReviews
+	ReviewsAverage  WallapopReview
 }
 
-type UserImage struct {
-	Original       string `json:"original"`
-	Xsmall         string `json:"xsmall"`
-	Small          string `json:"small"`
-	Large          string `json:"large"`
-	Medium         string `json:"medium"`
-	Xlarge         string `json:"xlarge"`
-	OriginalWidth  int    `json:"original_width"`
-	OriginalHeight int    `json:"original_height"`
+// NewProfile returns a new Wallapop struct
+func NewProfile() *Wallapop {
+	return &Wallapop{}
 }
 
-type User struct {
-	ID        string    `json:"id"`
-	MicroName string    `json:"micro_name"`
-	Image     UserImage `json:"image"`
-	Online    bool      `json:"online"`
-	Kind      string    `json:"kind"`
+// SetWallapopProfile sets the WallapopProfileInfo struct
+func (p *Wallapop) SetWallapopItems(userID string) *Wallapop {
+	p.WallapopItems = WallapopProfileItems(userID)
+	return p
 }
 
-type Flags struct {
-	Pending  bool `json:"pending"`
-	Sold     bool `json:"sold"`
-	Reserved bool `json:"reserved"`
-	Banned   bool `json:"banned"`
-	Expired  bool `json:"expired"`
-	Onhold   bool `json:"onhold"`
+// SetWallapopReviews sets the WallapopReviews struct
+func (p *Wallapop) SetWallapopReviews(userID string) *Wallapop {
+	p.WallapopReviews = WallapopProfileReviews(userID)
+	return p
 }
 
-type VisibilityFlags struct {
-	Bumped        bool `json:"bumped"`
-	Highlighted   bool `json:"highlighted"`
-	Urgent        bool `json:"urgent"`
-	CountryBumped bool `json:"country_bumped"`
-	Boosted       bool `json:"boosted"`
+// SetReviewsAverage sets the WallapopReview struct
+func (p *Wallapop) SetReviewsAverage() *Wallapop {
+	WallapopReviewsMap := make(map[string][]int)
+
+	for _, review := range p.WallapopReviews {
+		WallapopReviewsMap[review.Type] = append(WallapopReviewsMap[review.Type], review.Review.Scoring)
+	}
+
+	averages := make(map[string]float64)
+	for key, values := range WallapopReviewsMap {
+		sum := 0
+		for _, value := range values {
+			sum += value
+		}
+		average := float64(sum) / float64(len(values))
+		averages[key] = average
+	}
+
+	p.ReviewsAverage = WallapopReview{
+		Buy:   averages["buy"],
+		Sell:  averages["sell"],
+		Count: len(p.WallapopReviews),
+	}
+	return p
 }
 
-type ItemLocation struct {
-	City        string `json:"city"`
-	PostalCode  string `json:"postal_code"`
-	CountryCode string `json:"country_code"`
+// SetWallapopProfileInfo sets the WallapopProfileInfo struct
+func (p *Wallapop) SetWallapopProfileInfo(userID string) *Wallapop {
+	p.WallapopProfile = WallapopProfileInformation(userID)
+	p.SetFormattedCreationDate()
+
+	return p
 }
 
-type Shipping struct {
-	ItemIsShippable     bool        `json:"item_is_shippable"`
-	UserAllowsShipping  bool        `json:"user_allows_shipping"`
-	CostConfigurationID interface{} `json:"cost_configuration_id"`
+// SetCreationDate sets the FormattedDate field in WallapopProfileInfo struct
+func (p *Wallapop) SetFormattedCreationDate() *Wallapop {
+	// Turns the date timestamp into a human readable format
+	p.WallapopProfile.FormattedDate = utils.TimeFormatter(p.WallapopProfile.RegisterDate)
+	return p
 }
 
-type Content struct {
-	ID               string          `json:"id"`
-	Title            string          `json:"title"`
-	Storytelling     string          `json:"storytelling"`
-	Distance         float64         `json:"distance"`
-	Images           []Image         `json:"images"`
-	User             User            `json:"user"`
-	Flags            Flags           `json:"flags"`
-	VisibilityFlags  VisibilityFlags `json:"visibility_flags"`
-	Price            float64         `json:"price"`
-	Currency         string          `json:"currency"`
-	WebSlug          string          `json:"web_slug"`
-	CategoryID       int             `json:"category_id"`
-	Brand            string          `json:"brand"`
-	Model            string          `json:"model"`
-	Year             int             `json:"year"`
-	Version          string          `json:"version"`
-	Km               int             `json:"km"`
-	Engine           string          `json:"engine"`
-	Gearbox          string          `json:"gearbox"`
-	Horsepower       float64         `json:"horsepower"`
-	Favorited        bool            `json:"favorited"`
-	CreationDate     int64           `json:"creation_date"`
-	ModificationDate int64           `json:"modification_date"`
-	ItemLocation     ItemLocation    `json:"location"`
-	Shipping         Shipping        `json:"shipping"`
-	SupportsShipping bool            `json:"supports_shipping"`
+// SetWallapopCompleteProfile sets the Wallapop struct
+func (p *Wallapop) SetWallapopCompleteProfile(userID string) *Wallapop {
+	p.SetWallapopProfileInfo(userID)
+	p.SetWallapopItems(userID)
+	p.SetWallapopReviews(userID)
+	p.SetReviewsAverage()
+	return p
 }
 
-type Data struct {
-	ID      string    `json:"id"`
-	Type    string    `json:"type"`
-	Content []Content `json:"content"`
+// GetReviewsAverage returns the WallapopReview struct
+func (p *Wallapop) GetReviewsAverage() WallapopReview {
+	return p.ReviewsAverage
 }
 
-type SearchObjects struct {
-	ID      string  `json:"id"`
-	Type    string  `json:"type"`
-	Content Content `json:"content"`
+// GetWallapopProfileInfo returns the WallapopProfileInfo struct
+func (p *Wallapop) GetWallapopProfileInfo() WallapopProfileInfo {
+	return p.WallapopProfile
 }
 
-type WallapopRequestResponse struct {
-	SearchObjects   []SearchObjects   `json:"search_objects"`
-	From            int               `json:"from"`
-	To              int               `json:"to"`
-	DistanceOrdered bool              `json:"distance_ordered"`
-	Keywords        string            `json:"keywords"`
-	SearchPoint     location.Location `json:"search_point"`
+// GetWallapopItems returns the WallapopItems struct
+func (p *Wallapop) GetWallapopItems() WallapopItems {
+	return p.WallapopItems
 }
 
-func NewContent() *Data {
-	return &Data{}
+// GetWallapopReviews returns the WallapopReviews struct
+func (p *Wallapop) GetWallapopReviews() WallapopReviews {
+	return p.WallapopReviews
 }

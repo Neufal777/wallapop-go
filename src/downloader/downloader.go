@@ -1,18 +1,20 @@
 package downloader
 
 import (
-	"encoding/json"
 	"fmt"
-	"io"
-	"net/http"
 	"strconv"
 	"strings"
 	"time"
 
-	"github.com/walla-chollo/config"
+	"github.com/fatih/color"
+	"github.com/walla-chollo/src/httpRequest"
 	"github.com/walla-chollo/src/location"
 	"github.com/walla-chollo/src/verticals"
 	"github.com/walla-chollo/src/wallapop"
+)
+
+const (
+	WALLAPOP_BASE_SEARCH = "https://api.wallapop.com/api/v3/cars/search"
 )
 
 type Downloader struct {
@@ -100,12 +102,15 @@ func (dow *Downloader) SetOffset(Offset int) *Downloader {
 
 // Print prints the results of the search
 func (dow *Downloader) Print() {
+	// Print the search query
 	for _, response := range dow.WallapopRequestResponse {
 		for _, item := range response.SearchObjects {
+
 			// Convert float to string
 			price := strconv.FormatFloat(item.Content.Price, 'f', 2, 64)
 			km := strconv.Itoa(item.Content.Km)
 
+			// Print the results
 			fmt.Println("[ "+price+" € ] [ "+km+" km]", item.Content.Title, "https://es.wallapop.com/item/"+item.Content.WebSlug)
 		}
 	}
@@ -114,33 +119,16 @@ func (dow *Downloader) Print() {
 // GetWallapopContent returns the content of the Wallapop search
 func (dow *Downloader) GetWallapopContentPage() *Downloader {
 	url := fmt.Sprintf("%s?keywords=%s&filters_source=search_box&latitude=%f&start=%d&order_by=most_relevance&step=2&category_ids=%s&longitude=%f&max_sale_price=%d&max_year=%d&max_km=%d&engine=%s&gearbox=%s",
-		config.WALLAPOP_BASE_SEARCH, dow.Search, dow.Location.Latitude, dow.Offset, dow.Category, dow.Location.Longitude, dow.CarFields.Price, dow.CarFields.Year, dow.CarFields.Km, dow.CarFields.Fuel, dow.CarFields.Gearbox)
+		WALLAPOP_BASE_SEARCH, dow.Search, dow.Location.Latitude, dow.Offset, dow.Category, dow.Location.Longitude, dow.CarFields.Price, dow.CarFields.Year, dow.CarFields.Km, dow.CarFields.Fuel, dow.CarFields.Gearbox)
 
-	// Make the HTTP GET request
-	resp, err := http.Get(url)
+	content := wallapop.WallapopRequestResponse{}
+	err := httpRequest.GetAPIResponse(url, &content)
+
 	if err != nil {
 		fmt.Printf("Failed to make the HTTP request: %s\n", err)
 	}
 
-	defer resp.Body.Close()
-
-	// Read the response body
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Printf("Failed to read the response body: %s\n", err)
-	}
-
-	// Create a new instance of the Content struct
-	content := wallapop.WallapopRequestResponse{}
-
-	// Unmarshal the JSON response into the Content struct
-	err = json.Unmarshal(body, &content)
-
 	dow.WallapopRequestResponse = append(dow.WallapopRequestResponse, content)
-
-	if err != nil {
-		fmt.Printf("Failed to unmarshal JSON response: %s\n", err)
-	}
 
 	return dow
 }
@@ -150,7 +138,9 @@ func (dow *Downloader) GetWallapopContent() *Downloader {
 	for i := 0; i < dow.Limit; i++ {
 		dow.Offset += 20
 		dow.GetWallapopContentPage()
-		time.Sleep(2 * time.Second)
+		color.Green("downloading page... %d of a total %d", i, dow.Limit)
+
+		time.Sleep(1 * time.Second)
 	}
 
 	return dow

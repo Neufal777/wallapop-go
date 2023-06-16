@@ -1,14 +1,114 @@
-package profile
+package wallapop
 
-import (
-	"github.com/walla-chollo/utils"
-)
+import "github.com/walla-chollo/src/location"
 
-type Profile struct {
-	WallapopProfile WallapopProfileInfo `json:"wallapop_profile"`
-	WallapopItems   WallapopItems       `json:"items"`
-	WallapopReviews WallapopReviews     `json:"reviews"`
-	ReviewsAverage  WallapopReview      `json:"reviews_average"`
+type Image struct {
+	Original       string `json:"original"`
+	Xsmall         string `json:"xsmall"`
+	Small          string `json:"small"`
+	Large          string `json:"large"`
+	Medium         string `json:"medium"`
+	Xlarge         string `json:"xlarge"`
+	OriginalWidth  int    `json:"original_width"`
+	OriginalHeight int    `json:"original_height"`
+}
+
+type UserImage struct {
+	Original       string `json:"original"`
+	Xsmall         string `json:"xsmall"`
+	Small          string `json:"small"`
+	Large          string `json:"large"`
+	Medium         string `json:"medium"`
+	Xlarge         string `json:"xlarge"`
+	OriginalWidth  int    `json:"original_width"`
+	OriginalHeight int    `json:"original_height"`
+}
+
+type User struct {
+	ID        string    `json:"id"`
+	MicroName string    `json:"micro_name"`
+	Image     UserImage `json:"image"`
+	Online    bool      `json:"online"`
+	Kind      string    `json:"kind"`
+}
+
+type Flags struct {
+	Pending  bool `json:"pending"`
+	Sold     bool `json:"sold"`
+	Reserved bool `json:"reserved"`
+	Banned   bool `json:"banned"`
+	Expired  bool `json:"expired"`
+	Onhold   bool `json:"onhold"`
+}
+
+type VisibilityFlags struct {
+	Bumped        bool `json:"bumped"`
+	Highlighted   bool `json:"highlighted"`
+	Urgent        bool `json:"urgent"`
+	CountryBumped bool `json:"country_bumped"`
+	Boosted       bool `json:"boosted"`
+}
+
+type ItemLocation struct {
+	City        string `json:"city"`
+	PostalCode  string `json:"postal_code"`
+	CountryCode string `json:"country_code"`
+}
+
+type Shipping struct {
+	ItemIsShippable     bool        `json:"item_is_shippable"`
+	UserAllowsShipping  bool        `json:"user_allows_shipping"`
+	CostConfigurationID interface{} `json:"cost_configuration_id"`
+}
+
+type Content struct {
+	ID               string          `json:"id"`
+	Title            string          `json:"title"`
+	Storytelling     string          `json:"storytelling"`
+	Distance         float64         `json:"distance"`
+	Images           []Image         `json:"images"`
+	User             User            `json:"user"`
+	Flags            Flags           `json:"flags"`
+	VisibilityFlags  VisibilityFlags `json:"visibility_flags"`
+	Price            float64         `json:"price"`
+	Currency         string          `json:"currency"`
+	WebSlug          string          `json:"web_slug"`
+	CategoryID       int             `json:"category_id"`
+	Brand            string          `json:"brand"`
+	Model            string          `json:"model"`
+	Year             int             `json:"year"`
+	Version          string          `json:"version"`
+	Km               int             `json:"km"`
+	Engine           string          `json:"engine"`
+	Gearbox          string          `json:"gearbox"`
+	Horsepower       float64         `json:"horsepower"`
+	Favorited        bool            `json:"favorited"`
+	CreationDate     int64           `json:"creation_date"`
+	ModificationDate int64           `json:"modification_date"`
+	ItemLocation     ItemLocation    `json:"location"`
+	Shipping         Shipping        `json:"shipping"`
+	SupportsShipping bool            `json:"supports_shipping"`
+}
+
+type Data struct {
+	ID      string    `json:"id"`
+	Type    string    `json:"type"`
+	Content []Content `json:"content"`
+}
+
+type SearchObjects struct {
+	ID      string  `json:"id"`
+	Type    string  `json:"type"`
+	Content Content `json:"content"`
+}
+
+type WallapopRequestResponse struct {
+	SearchObjects   []SearchObjects   `json:"search_objects"`
+	From            int               `json:"from"`
+	To              int               `json:"to"`
+	DistanceOrdered bool              `json:"distance_ordered"`
+	Keywords        string            `json:"keywords"`
+	SearchPoint     location.Location `json:"search_point"`
 }
 
 type WallapopItems struct {
@@ -139,20 +239,20 @@ type WallapopProfileInfo struct {
 	ID            string `json:"id"`
 	MicroName     string `json:"micro_name"`
 	Type          string `json:"type"`
-	// Image     struct {
-	// 	ID              string `json:"id"`
-	// 	OriginalWidth   int    `json:"original_width"`
-	// 	OriginalHeight  int    `json:"original_height"`
-	// 	AverageHexColor string `json:"average_hex_color"`
-	// 	UrlsBySize      struct {
-	// 		Small    string `json:"small"`
-	// 		Xmall    string `json:"xmall"`
-	// 		Original string `json:"original"`
-	// 		Large    string `json:"large"`
-	// 		Xlarge   string `json:"xlarge"`
-	// 		Medium   string `json:"medium"`
-	// 	} `json:"urls_by_size"`
-	// } `json:"image"`
+	Image         struct {
+		ID              string `json:"id"`
+		OriginalWidth   int    `json:"original_width"`
+		OriginalHeight  int    `json:"original_height"`
+		AverageHexColor string `json:"average_hex_color"`
+		UrlsBySize      struct {
+			Small    string `json:"small"`
+			Xmall    string `json:"xmall"`
+			Original string `json:"original"`
+			Large    string `json:"large"`
+			Xlarge   string `json:"xlarge"`
+			Medium   string `json:"medium"`
+		} `json:"urls_by_size"`
+	} `json:"image"`
 	Location struct {
 		ApproximatedLatitude  float64 `json:"approximated_latitude"`
 		ApproximatedLongitude float64 `json:"approximated_longitude"`
@@ -195,71 +295,8 @@ type WallapopProfileInfo struct {
 	} `json:"extra_info"`
 }
 
-func NewProfile() *Profile {
-	return &Profile{}
-}
-func (p *Profile) SetWallapopProfileInfo(userID string) *Profile {
-	p.WallapopProfile = WallapopProfileInformation(userID)
-	p.SetCreationDate()
-
-	return p
-}
-
-func (p *Profile) SetWallapopItems(userID string) *Profile {
-	p.WallapopItems = WallapopProfileItems(userID)
-	return p
-}
-
-func (p *Profile) SetWallapopReviews(userID string) *Profile {
-	p.WallapopReviews = WallapopProfileReviews(userID)
-	return p
-}
-
-func (p *Profile) SetWallapopProfile(userID string) *Profile {
-	p.SetWallapopProfileInfo(userID)
-	p.SetWallapopItems(userID)
-	p.SetWallapopReviews(userID)
-	p.SetCreationDate()
-	return p
-}
-
 type WallapopReview struct {
 	Buy   float64
 	Sell  float64
 	Count int
-}
-
-func (p *Profile) SetReviewsAverage() *Profile {
-	WallapopReviewsMap := make(map[string][]int)
-	WallapopReviews := WallapopReview{}
-
-	for _, review := range p.WallapopReviews {
-		WallapopReviewsMap[review.Type] = append(WallapopReviewsMap[review.Type], review.Review.Scoring)
-	}
-
-	averages := make(map[string]float64)
-	for key, values := range WallapopReviewsMap {
-		sum := 0
-		for _, value := range values {
-			sum += value
-		}
-		average := float64(sum) / float64(len(values))
-		averages[key] = average
-	}
-
-	WallapopReviews.Buy = averages["buy"]
-	WallapopReviews.Sell = averages["sell"]
-	WallapopReviews.Count = len(p.WallapopReviews)
-
-	p.ReviewsAverage = WallapopReviews
-	return p
-}
-
-func (p *Profile) GetReviewsAverage() WallapopReview {
-	return p.ReviewsAverage
-}
-
-func (p *Profile) SetCreationDate() *Profile {
-	p.WallapopProfile.FormattedDate = utils.TimeFormatter(p.WallapopProfile.RegisterDate)
-	return p
 }
