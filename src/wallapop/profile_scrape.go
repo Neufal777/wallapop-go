@@ -12,8 +12,10 @@ const (
 
 // WallapopProfileInfo is the struct that contains the information of a wallapop user
 func WallapopProfileInformation(userID string) WallapopProfileInfo {
-	url := API_V3_USERS + userID
-	profileInformation := WallapopProfileInfo{}
+	var (
+		url                = API_V3_USERS + userID
+		profileInformation = WallapopProfileInfo{}
+	)
 
 	err := httpRequest.GetAPIResponse(url, &profileInformation)
 	if err != nil {
@@ -26,8 +28,10 @@ func WallapopProfileInformation(userID string) WallapopProfileInfo {
 
 // WallapopProfileItems is the struct that contains the items of a wallapop user
 func WallapopProfileItems(userID string) WallapopItems {
-	url := API_V3_USERS + userID + "/items"
-	itemsList := WallapopItems{}
+	var (
+		url       = API_V3_USERS + userID + "/items"
+		itemsList = WallapopItems{}
+	)
 
 	err := httpRequest.GetAPIResponse(url, &itemsList)
 	if err != nil {
@@ -40,8 +44,10 @@ func WallapopProfileItems(userID string) WallapopItems {
 
 // WallapopProfileReviews is the struct that contains the reviews of a wallapop user
 func WallapopProfileReviews(userID string) WallapopReviews {
-	url := API_V3_USERS + userID + "/reviews"
-	result := WallapopReviews{}
+	var (
+		url    = API_V3_USERS + userID + "/reviews"
+		result = WallapopReviews{}
+	)
 
 	err := httpRequest.GetAPIResponse(url, &result)
 	if err != nil {

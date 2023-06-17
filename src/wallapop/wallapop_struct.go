@@ -235,11 +235,10 @@ type WallapopReviews []struct {
 }
 
 type WallapopProfileInfo struct {
-	FormattedDate string `json:"formatted_date"`
-	ID            string `json:"id"`
-	MicroName     string `json:"micro_name"`
-	Type          string `json:"type"`
-	Image         struct {
+	ID        string `json:"id"`
+	MicroName string `json:"micro_name"`
+	Type      string `json:"type"`
+	Image     struct {
 		ID              string `json:"id"`
 		OriginalWidth   int    `json:"original_width"`
 		OriginalHeight  int    `json:"original_height"`
@@ -293,10 +292,4 @@ type WallapopProfileInfo struct {
 		NewsNotification                  bool    `json:"news_notification"`
 		ModifiedDate                      int64   `json:"modified_date"`
 	} `json:"extra_info"`
-}
-
-type WallapopReview struct {
-	Buy   float64
-	Sell  float64
-	Count int
 }

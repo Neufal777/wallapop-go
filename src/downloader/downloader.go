@@ -146,20 +146,20 @@ func (dow *Downloader) GetWallapopContent() *Downloader {
 	return dow
 }
 
-// SetUserToItems maps the results with the user ID and the Post ID
-func (dow *Downloader) SetUserToItems() map[string][]string {
-	// Map the results with the user ID and the Post ID
-	mapResults := make(map[string][]string)
+// // SetUserToItems maps the results with the user ID and the Post ID
+// func (dow *Downloader) SetUserToItems() map[string][]string {
+// 	// Map the results with the user ID and the Post ID
+// 	mapResults := make(map[string][]string)
 
-	for _, response := range dow.WallapopRequestResponse {
-		for _, item := range response.SearchObjects {
-			// Convert float to string
-			UserID := item.Content.User.ID
-			PostID := item.Content.ID
+// 	for _, response := range dow.WallapopRequestResponse {
+// 		for _, item := range response.SearchObjects {
+// 			// Convert float to string
+// 			UserID := item.Content.User.ID
+// 			PostID := item.Content.ID
 
-			mapResults[UserID] = append(mapResults[UserID], PostID)
-		}
-	}
+// 			mapResults[UserID] = append(mapResults[UserID], PostID)
+// 		}
+// 	}
 
-	return mapResults
-}
+// 	return mapResults
+// }
