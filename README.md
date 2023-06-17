@@ -1,2 +1,2 @@
-# walla-chollo
-Buscador de ofertas en wallapop
+# Wallapop-GO
+API client para go
