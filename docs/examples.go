@@ -33,6 +33,4 @@ func GetLowReviews() {
 	// SetReviewsAverage().
 	// GetReviewsAverage()
 
-	// fmt.Println(utils.PrettyPrintStruct(profile))
-
 }
