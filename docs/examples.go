@@ -1,16 +1,19 @@
 package docs
 
 import (
+	"log"
+
 	"github.com/walla-chollo/src/downloader"
 	"github.com/walla-chollo/src/verticals"
+	"github.com/walla-chollo/tools"
 )
 
 func GetLowReviews() {
-	_ = downloader.NewDownloader().
+	wallapop := downloader.NewDownloader().
 		SetLocation("providencia 33 manresa 08241 Barcelona").
 		SetCategory("100").
 		SetSearch("").
-		SetLimit(50).
+		SetLimit(1).
 		SetCarParams(verticals.Car{
 			Km:    200000,
 			Price: 500000,
@@ -21,6 +24,9 @@ func GetLowReviews() {
 		SetOffset(0).
 		GetWallapopContent()
 
+	log.Println(
+		tools.PrettyPrintStruct(wallapop),
+	)
 	//Get users with low reviews
 	// _ = wallapopContent.SetUserToItems()
 
