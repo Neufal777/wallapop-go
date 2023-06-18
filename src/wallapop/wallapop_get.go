@@ -1,16 +1,19 @@
 package wallapop
 
 // GetWallapopProfileInfo returns the WallapopProfileInfo struct
-func (p *Wallapop) GetWallapopProfileInfo() WallapopProfileInfo {
-	return p.WallapopProfile
+func (w *Wallapop) GetWallapopProfileInfo() WallapopProfileInfo {
+	return w.WallapopUserProfile
 }
 
 // GetWallapopItems returns the WallapopItems struct
-func (p *Wallapop) GetWallapopItems() WallapopItems {
-	return p.WallapopItems
+func (w *Wallapop) GetWallapopItems() WallapopItems {
+	return w.WallapopUserItems
 }
 
 // GetWallapopReviews returns the WallapopReviews struct
-func (p *Wallapop) GetWallapopReviews() WallapopReviews {
-	return p.WallapopReviews
+func (w *Wallapop) GetWallapopReviews() WallapopReviews {
+	return w.WallapopUserReviews
 }
+
+// Get information for a specific item
+// https://api.wallapop.com/api/v3/items/p61ywex3x265

@@ -293,3 +293,133 @@ type WallapopProfileInfo struct {
 		ModifiedDate                      int64   `json:"modified_date"`
 	} `json:"extra_info"`
 }
+
+type WallapopItem struct {
+	ID    string `json:"id"`
+	Title struct {
+		Original string `json:"original"`
+	} `json:"title"`
+	Description struct {
+		Original string `json:"original"`
+	} `json:"description"`
+	Taxonomy []struct {
+		ID   string `json:"id"`
+		Name string `json:"name"`
+		Icon string `json:"icon"`
+	} `json:"taxonomy"`
+	Type string `json:"type"`
+	User struct {
+		ID string `json:"id"`
+	} `json:"user"`
+	Slug         string `json:"slug"`
+	ShareURL     string `json:"share_url"`
+	ModifiedDate int    `json:"modified_date"`
+	Images       []struct {
+		ID           string `json:"id"`
+		AverageColor string `json:"average_color"`
+		Urls         struct {
+			Small  string `json:"small"`
+			Medium string `json:"medium"`
+			Big    string `json:"big"`
+		} `json:"urls"`
+	} `json:"images"`
+	Price struct {
+		Cash struct {
+			Amount   float64 `json:"amount"`
+			Currency string  `json:"currency"`
+		} `json:"cash"`
+	} `json:"price"`
+	Location struct {
+		Latitude     float64 `json:"latitude"`
+		Longitude    float64 `json:"longitude"`
+		Approximated bool    `json:"approximated"`
+		CountryCode  string  `json:"country_code"`
+		City         string  `json:"city"`
+		PostalCode   string  `json:"postal_code"`
+	} `json:"location"`
+	TypeAttributes struct {
+		Brand struct {
+			Value    string `json:"value"`
+			Title    string `json:"title"`
+			Text     string `json:"text"`
+			IconText string `json:"icon_text"`
+		} `json:"brand"`
+		Model struct {
+			Value    string `json:"value"`
+			Title    string `json:"title"`
+			Text     string `json:"text"`
+			IconText string `json:"icon_text"`
+		} `json:"model"`
+		Version struct {
+			Value    string `json:"value"`
+			Title    string `json:"title"`
+			Text     string `json:"text"`
+			IconText string `json:"icon_text"`
+		} `json:"version"`
+		Year struct {
+			Value    string `json:"value"`
+			Title    string `json:"title"`
+			Text     string `json:"text"`
+			IconText string `json:"icon_text"`
+		} `json:"year"`
+		GearBox struct {
+			Value    string `json:"value"`
+			Title    string `json:"title"`
+			Text     string `json:"text"`
+			IconText string `json:"icon_text"`
+		} `json:"gear_box"`
+		BodyType struct {
+			Value    string `json:"value"`
+			Title    string `json:"title"`
+			Text     string `json:"text"`
+			IconText string `json:"icon_text"`
+		} `json:"body_type"`
+		Engine struct {
+			Value    string `json:"value"`
+			Title    string `json:"title"`
+			Text     string `json:"text"`
+			IconText string `json:"icon_text"`
+		} `json:"engine"`
+		Km struct {
+			Value    string `json:"value"`
+			Title    string `json:"title"`
+			Text     string `json:"text"`
+			IconText string `json:"icon_text"`
+		} `json:"km"`
+		Doors struct {
+			Value    string `json:"value"`
+			Title    string `json:"title"`
+			Text     string `json:"text"`
+			IconText string `json:"icon_text"`
+		} `json:"doors"`
+		Seats struct {
+			Value    string `json:"value"`
+			Title    string `json:"title"`
+			Text     string `json:"text"`
+			IconText string `json:"icon_text"`
+		} `json:"seats"`
+		HorsePower struct {
+			Value    string `json:"value"`
+			Title    string `json:"title"`
+			Text     string `json:"text"`
+			IconText string `json:"icon_text"`
+		} `json:"horse_power"`
+	} `json:"type_attributes"`
+	SupportsShipping struct {
+	} `json:"supports_shipping"`
+	Shipping struct {
+		ItemIsShippable    bool `json:"item_is_shippable"`
+		UserAllowsShipping bool `json:"user_allows_shipping"`
+	} `json:"shipping"`
+	Hashtags struct {
+		Values []string `json:"values"`
+	} `json:"hashtags"`
+	Favorited struct {
+		Flag bool `json:"flag"`
+	} `json:"favorited"`
+	Counters struct {
+		Views         int `json:"views"`
+		Favorites     int `json:"favorites"`
+		Conversations int `json:"conversations"`
+	} `json:"counters"`
+}

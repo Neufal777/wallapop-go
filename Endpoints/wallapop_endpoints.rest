@@ -8,3 +8,6 @@ GET https://api.wallapop.com/api/v3/users/lqzmmeyv9yzv/reviews
 
 # items by USER and by ID
 GET https://api.wallapop.com/api/v3/users/vjrd4dm3786k/items?category_id=100
+
+GET https://api.wallapop.com/api/v3/items/p61ywex3x265
+

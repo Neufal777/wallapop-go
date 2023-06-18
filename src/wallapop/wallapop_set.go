@@ -1,31 +1,34 @@
 package wallapop
 
-func (p *Wallapop) SetWallapopItemsbyCategory(category string) string {
-	return ""
+// SetWallapopItems sets the WallapopItems struct for a specific category.
+// If no category is provided, it sets the items for all categories.
+// Categories options: Cars: "100"
+func (w *Wallapop) SetWallapopItems(category ...string) *Wallapop {
+	if len(category) > 0 {
+		w.WallapopUserItems = w.HttpWallapopProfileItems(category[0])
+	} else {
+		w.WallapopUserItems = w.HttpWallapopProfileItems()
+	}
+
+	return w
 }
 
 // SetWallapopProfileInfo sets the WallapopProfileInfo struct
-func (p *Wallapop) SetWallapopProfileInfo() *Wallapop {
-	p.WallapopProfile = p.HttpWallapopProfileInfo()
-	return p
-}
-
-// SetWallapopProfile sets the WallapopProfileInfo struct
-func (p *Wallapop) SetWallapopItems() *Wallapop {
-	p.WallapopItems = p.HttpWallapopProfileItems()
-	return p
+func (w *Wallapop) SetWallapopProfileInfo() *Wallapop {
+	w.WallapopUserProfile = w.HttpWallapopProfileInfo()
+	return w
 }
 
 // SetWallapopReviews sets the WallapopReviews struct
-func (p *Wallapop) SetWallapopReviews() *Wallapop {
-	p.WallapopReviews = p.HttpWallapopProfileReviews()
-	return p
+func (w *Wallapop) SetWallapopReviews() *Wallapop {
+	w.WallapopUserReviews = w.HttpWallapopProfileReviews()
+	return w
 }
 
 // SetWallapopCompleteProfile sets the Wallapop struct
-func (p *Wallapop) SetWallapopCompleteProfile() *Wallapop {
-	p.SetWallapopProfileInfo()
-	p.SetWallapopItems()
-	p.SetWallapopReviews()
-	return p
+func (w *Wallapop) SetWallapopCompleteProfile() *Wallapop {
+	w.SetWallapopProfileInfo()
+	w.SetWallapopItems()
+	w.SetWallapopReviews()
+	return w
 }

@@ -7,48 +7,47 @@ import (
 )
 
 const (
-	APIV3Users = "https://api.wallapop.com/api/v3/users/"
+	API_V3_USERS = "https://api.wallapop.com/api/v3/users/"
 )
 
 func handleError(err error) {
 	fmt.Printf("Error: %s\n", err)
 }
 
-// HttpWallapopProfileInfo retrieves the profile information of a Wallapop user
-func (p *Wallapop) HttpWallapopProfileInfo() WallapopProfileInfo {
-	var profileInfo WallapopProfileInfo
-	url := fmt.Sprintf("%s%s", APIV3Users, p.UserID)
+// HttpWallapop retrieves the data of a Wallapop user
+func (w *Wallapop) HttpWallapop(path string, result interface{}) {
+	url := fmt.Sprintf("%s%s%s", API_V3_USERS, w.User.ID, path)
 
-	err := httpRequest.GetAPIResponse(url, &profileInfo)
+	err := httpRequest.GetAPIResponse(url, result)
 	if err != nil {
 		handleError(err)
 	}
+}
 
+// HttpWallapopProfileInfo retrieves the profile information of a Wallapop user
+func (w *Wallapop) HttpWallapopProfileInfo() WallapopProfileInfo {
+	var profileInfo WallapopProfileInfo
+	w.HttpWallapop("/", &profileInfo)
 	return profileInfo
 }
 
-// HttpWallapopProfileItems retrieves the items of a Wallapop user
-func (p *Wallapop) HttpWallapopProfileItems() WallapopItems {
-	var items WallapopItems
-	url := fmt.Sprintf("%s%s/items", APIV3Users, p.UserID)
-
-	err := httpRequest.GetAPIResponse(url, &items)
-	if err != nil {
-		handleError(err)
-	}
-
-	return items
+// HttpWallapopProfileReviews retrieves the reviews of a Wallapop user
+func (w *Wallapop) HttpWallapopProfileReviews() WallapopReviews {
+	var reviews WallapopReviews
+	w.HttpWallapop("/reviews", &reviews)
+	return reviews
 }
 
-// HttpWallapopProfileReviews retrieves the reviews of a Wallapop user
-func (p *Wallapop) HttpWallapopProfileReviews() WallapopReviews {
-	var reviews WallapopReviews
-	url := fmt.Sprintf("%s%s/reviews", APIV3Users, p.UserID)
+// HttpWallapopProfileItems retrieves the items of a Wallapop user for a specific category.
+// If no category is provided, it retrieves all items.
+func (w *Wallapop) HttpWallapopProfileItems(category ...string) WallapopItems {
+	var items WallapopItems
+	url := "/items"
 
-	err := httpRequest.GetAPIResponse(url, &reviews)
-	if err != nil {
-		handleError(err)
+	if len(category) > 0 {
+		url = fmt.Sprintf("/items?category_id=%s", category[0])
 	}
 
-	return reviews
+	w.HttpWallapop(url, &items)
+	return items
 }

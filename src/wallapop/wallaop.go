@@ -2,28 +2,27 @@ package wallapop
 
 // ├── Setters  for 'wallapop'/
 // │   ├── SetWallapopItems()
-// │   ├── SetWallapopReviews()
-// │   ├── SetReviewsAverage()
+// │   ├── SetWallapopItemsbyCategory()
 // │   ├── SetWallapopProfileInfo()
-// │   ├── SetFormattedCreationDate()
-// │   └── SetWallapopCompleteProfile()
+// │   ├── SetWallapopReviews()
+// │   ├── SetWallapopCompleteProfile()
 // └── Getters  for 'wallapop'/
-//
-//	├── GetReviewsAverage()
 //	├── GetWallapopProfileInfo()
 //	├── GetWallapopItems()
-//	└── GetWallapopReviews()
+//	├── GetWallapopReviews()
 
 type Wallapop struct {
-	UserID          string
-	WallapopProfile WallapopProfileInfo
-	WallapopItems   WallapopItems
-	WallapopReviews WallapopReviews
+	User                User
+	WallapopUserProfile WallapopProfileInfo
+	WallapopUserItems   WallapopItems
+	WallapopUserReviews WallapopReviews
 }
 
 // New returns a new Wallapop struct
 func New(UserID string) *Wallapop {
 	return &Wallapop{
-		UserID: UserID,
+		User: User{
+			ID: UserID,
+		},
 	}
 }
