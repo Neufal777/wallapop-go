@@ -3,7 +3,29 @@
 
 This package provides a set of structures and methods for interacting with the Wallapop API and retrieving user profile information, items, and reviews.
 
+To install the `wallapop-go` repository using `go get`, follow these steps:
 
+1. Open your terminal or command prompt.
+
+2. Run the following command to install the repository:
+
+   ```
+   go get github.com/Neufal777/wallapop-go
+   ```
+
+   This command will download the repository and its dependencies into your Go workspace.
+
+3. After the command completes successfully, you can import the `wallapop-go` package in your Go code using the import statement:
+
+   ```go
+   import "github.com/Neufal777/wallapop-go"
+   ```
+
+   Now you can use the functions and types provided by the `wallapop-go` package in your Go code.
+
+Note: Make sure you have Go installed and your `$GOPATH` environment variable properly set before running the `go get` command.
+
+**Example:**
 ```go
 
 func main() {
