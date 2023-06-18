@@ -9,7 +9,7 @@ This package provides a set of structures and methods for interacting with the W
 ```go
 
 func main() {
-	
+
 	// Create a new Wallapop Object
 	// Set the user ID, can be found in the URL of the user profile page
 	// Example: https://es.wallapop.com/app/user/ocasionplusg-437879034-8j3y83q89169/published
@@ -239,7 +239,7 @@ func main() {
 
 | ID           | NAME       | LOCATION CITY | URL SHARE                             | SINCE                   | ... | 
 | :----------- | :--------- | :------------ | :------------------------------------ | :---------------------- | :--- |
-| `abc012345`  | `Dracco NF`| `Barcelona`   | `http://p.wallapop.com/p/0123456789`  | `2018-07-17 21:20:23 CEST`| ... |
+| `abc012345`  | `Dracco`| `Barcelona`   | `http://p.wallapop.com/p/0123456789`  | `2018-07-17`| ... |
 
 
 ## Items:
@@ -255,8 +255,8 @@ func main() {
 
 |           TITLE            |    PRICE    | CATEGORY |                                 URL             | ...|
 | :------------------------: | :---------: | :------: | :---------------------------------------------: |  :-------: |
-| Mercedes-Benz Sprinter 4x4 | 50000.00 €  |   100    | https://es.wallapop.com/item/xxx-mercedes-00000 | ...|
-| Volkswagen crafter 2.1     | 34000.00 €  |   100    | https://es.wallapop.com/item/xxx-vcrafter-00000 | ... |
+| Mercedes-Benz | 50000.00 €  |   100    | https://es.wallapop....-00000 | ...|
+| Volkswagen      | 34000.00 €  |   100    | https://es.wallapop....-00000 | ... |
 
 
 ## Reviews:
