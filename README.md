@@ -4,8 +4,6 @@
 This package provides a set of structures and methods for interacting with the Wallapop API and retrieving user profile information, items, and reviews.
 
 
-## Types
-
 ```go
 
 func main() {
