@@ -12,7 +12,7 @@ package wallapop
 //	├── GetWallapopReviews()
 
 type Wallapop struct {
-	User                User
+	User                struct{ ID string }
 	WallapopUserProfile WallapopProfileInfo
 	WallapopUserItems   WallapopItems
 	WallapopUserReviews WallapopReviews
@@ -21,8 +21,6 @@ type Wallapop struct {
 // New returns a new Wallapop struct
 func New(UserID string) *Wallapop {
 	return &Wallapop{
-		User: User{
-			ID: UserID,
-		},
+		User: struct{ ID string }{ID: UserID},
 	}
 }

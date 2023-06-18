@@ -5,7 +5,7 @@ import (
 )
 
 func main() {
-	wall := wallapop.New("wzvy4v2l07zl")
+	wall := wallapop.New("npj9q77050ze")
 
 	// Sets ALL the information for the user (profile info, items, reviews, etc.)
 	// In case you:
