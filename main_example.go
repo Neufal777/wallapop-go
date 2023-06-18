@@ -39,5 +39,4 @@ func Main_example() {
 	// If you need to retrieve the category information, you can use the following function,
 	// This will return a WallapopCategory{...} object with the information of the category
 	_ = wallapop.GetWallapopCategoryData(14000) // 14000 is the ID of the category
-
 }
