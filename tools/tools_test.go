@@ -10,7 +10,7 @@ func TestTimeFormatter(t *testing.T) {
 	timestamp := int64(1624010403000) // June 18, 2021 12:00:03 CEST
 
 	// Define the time zone for comparison
-	loc, err := time.LoadLocation("UTC")
+	loc, err := time.LoadLocation("Europe/Paris")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -18,7 +18,7 @@ func TestTimeFormatter(t *testing.T) {
 	// Call the function being tested
 	result := TimeFormatter(timestamp)
 
-	// Parse the expected time in the UTC time zone
+	// Parse the expected time in the time zone
 	expectedTime, err := time.ParseInLocation("2006-01-02 15:04:05 MST", "2021-06-18 12:00:03 CEST", loc)
 	if err != nil {
 		t.Fatal(err)
