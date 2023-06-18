@@ -5,21 +5,39 @@ import (
 )
 
 func main() {
-	wall := wallapop.New("npj9q77050ze")
 
-	// Sets ALL the information for the user (profile info, items, reviews, etc.)
-	// In case you:
-	// just need the profile info, you can use wallapop.SetWallapopProfileInfo()
-	// just need the items, you can use wallapop.SetWallapopItems()
-	// just need the reviews, you can use wallapop.SetWallapopReviews()
-	wall.SetWallapopAll()
+	// Create a new Wallapop Object
+	// Set the user ID, can be found in the URL of the user profile page
+	// Example: https://es.wallapop.com/app/user/ocasionplusg-437879034-8j3y83q89169/published
+	// The user ID in this case is: 8j3y83q89169
 
-	// In case you:
-	// want all the information, leave the parameter empty
-	// just need the items, you can use wallapop.CliWallapopPrint("profile")
-	// just need the profile info, you can use wallapop.CliWallapopPrint("items")
-	// just need the reviews, you can use wallapop.CliWallapopPrint("reviews")
-	// need multiple information, you can set them all, wallapop.CliWallapopPrint("profile", "products", etc.)
-	wall.CliWallapopPrint("items", "profile")
+	// In case you want to retrieve specific information, you can use the following methods:
+	wall := wallapop.New("8j3y83q89169")
+
+	wall.SetWallapopItems()       // Optional
+	wall.SetWallapopProfileInfo() // Optional
+	wall.SetWallapopReviews()     // Optional
+
+	// The code above is the same as:
+	_ = wallapop.New("8j3y83q89169")
+	wall.SetWallapopAll() // This method sets all the information (profile, items, reviews)
+
+	// To retrieve the data set to the Wallapop Object, you can use the following methods:
+	wall.GetWallapopItems()       // return a WallapopItems{...}
+	wall.GetWallapopProfileInfo() // return WallapopProfileInfo{...}
+	wall.GetWallapopReviews()     // return WallapopReviews{...}
+
+	// Regarding the tables, you can display them in the CLI with the following methods:
+
+	// Display the tables with the information, you can set the tables you want to display
+	wall.CliWallapopPrint("profile", "items") // Options: profile, items, reviews
+
+	// Display all, left empty, it will display all the tables
+	wall.CliWallapopPrint()
+
+	// Categories are identified by their ID, you can find the ID in Item object (CategoryID)
+	// If you need to retrieve the category information, you can use the following function,
+	// This will return a WallapopCategory{...} object with the information of the category
+	_ = wallapop.GetWallapopCategoryData(14000) // 14000 is the ID of the category
 
 }

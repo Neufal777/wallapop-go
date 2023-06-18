@@ -1,15 +1,70 @@
 
-# Package Documentation: wallapop-Go
+# Documentation: wallapop-Go
 
 This package provides a set of structures and methods for interacting with the Wallapop API and retrieving user profile information, items, and reviews.
 
+
 ## Types
 
-- `Wallapop`: Represents the main structure that holds user information, profile data, items, and reviews.
+```go
 
+func main() {
+	
+	// Create a new Wallapop Object
+	// Set the user ID, can be found in the URL of the user profile page
+	// Example: https://es.wallapop.com/app/user/ocasionplusg-437879034-8j3y83q89169/published
+	// The user ID in this case is: 8j3y83q89169
+
+	// In case you want to retrieve specific information, you can use the following methods:
+	wall := wallapop.New("8j3y83q89169")
+
+	wall.SetWallapopItems()       // Optional
+	wall.SetWallapopProfileInfo() // Optional
+	wall.SetWallapopReviews()     // Optional
+
+	// The code above is the same as:
+	_ = wallapop.New("8j3y83q89169")
+	wall.SetWallapopAll() // This method sets all the information (profile, items, reviews)
+
+	// To retrieve the data set to the Wallapop Object, you can use the following methods:
+	wall.GetWallapopItems()       // return a WallapopItems{...}
+	wall.GetWallapopProfileInfo() // return WallapopProfileInfo{...}
+	wall.GetWallapopReviews()     // return WallapopReviews{...}
+
+	// Regarding the tables, you can display them in the CLI with the following methods:
+
+	// Display the tables with the information, you can set the tables you want to display
+	wall.CliWallapopPrint("profile", "items") // Options: profile, items, reviews
+
+	// Display all, left empty, it will display all the tables
+	wall.CliWallapopPrint()
+
+	// Categories are identified by their ID, you can find the ID in Item object (CategoryID)
+	// If you need to retrieve the category information, you can use the following function,
+	// This will return a WallapopCategory{...} object with the information of the category
+	category := wallapop.GetWallapopCategoryData(14000) // 14000 is the ID of the category
+
+}
+
+
+
+
+```
+
+- **`Wallapop`**: Represents the main structure that holds user information, profile data, items, and reviews.
+
+**Example:** 
+```json
+{
+  "User": null,
+  "WallapopUserProfile": null,
+  "WallapopUserItems": null,
+  "WallapopUserReviews": null 
+}
+```
 ## Methods
 
-- `New(UserID string) *Wallapop`: Returns a new instance of the `Wallapop` struct with the specified user ID (the ID will be used to get the different data we might need in the future).
+- **`New(UserID string) *Wallapop`**: Returns a new instance of the `Wallapop` object with the specified user ID (the ID will be used to get the different data we might need in the future).
 
 **Example:**
 ```json
@@ -23,7 +78,7 @@ This package provides a set of structures and methods for interacting with the W
 }
 ```
 
-- `SetWallapopProfileInfo() *Wallapop`: Sets the `WallapopProfileInfo` struct.
+- **`SetWallapopProfileInfo() *Wallapop`**: Sets the `WallapopProfileInfo` struct.
 
 **Example:**
 ```json
@@ -61,7 +116,7 @@ This package provides a set of structures and methods for interacting with the W
 }
 ```
 
-- `SetWallapopItems(category ...string) *Wallapop`: Sets the `WallapopItems` struct for the specified category. If no category is provided, it sets the items for all categories. Currently, only one category can be set.
+- **`SetWallapopItems(category ...string) *Wallapop`**: Sets the `WallapopItems` object for the specified category. If no category is provided, it sets the items for all categories. Currently, only one category can be set.
 
 **Example:**
 
@@ -91,7 +146,7 @@ This package provides a set of structures and methods for interacting with the W
 }
 ```
 
-- `SetWallapopReviews() *Wallapop`: Sets the `WallapopReviews` struct.
+- **`SetWallapopReviews() *Wallapop`**: Sets the `WallapopReviews` struct.
 
 **Example:**
 
@@ -122,9 +177,9 @@ This package provides a set of structures and methods for interacting with the W
 	]
 }
 ```
-- `SetWallapopAll() *Wallapop`: Sets all the user information including profile, items, and reviews.
+- **`SetWallapopAll() *Wallapop`**: Sets all the user information including profile, items, and reviews.
 
-- `GetWallapopProfileInfo() WallapopProfileInfo`: Returns the `WallapopProfileInfo` containing user profile information.
+- **`GetWallapopProfileInfo() WallapopProfileInfo`**: Returns the `WallapopProfileInfo` containing user profile information.
 
    **Example:**
    ```json
@@ -149,16 +204,91 @@ This package provides a set of structures and methods for interacting with the W
    }
    ```
 
-- `GetWallapopItems() WallapopItems`: Returns the `WallapopItems` struct containing user items.
+- **`GetWallapopItems() WallapopItems`**: Returns the `WallapopItems` object containing user items.
 
-- `GetWallapopReviews() WallapopReviews`: Returns the `WallapopReviews` struct containing user reviews.
+- **`GetWallapopReviews() WallapopReviews`**: Returns the `WallapopReviews` object containing user reviews.
 
-- `CliWallapopPrint(displayMode ...string)`: Prints user profile information, items, and reviews based on the provided display mode. The display mode determines which information to print. If no display mode is provided, it defaults to printing all information.
+- **`CliWallapopPrint(displayMode ...string)`**: Prints user profile information, items, and reviews based on the provided display mode. The display mode determines which information to print. If no display mode is provided, it defaults to printing all information.
+
+**Example(s):** Note: You can add as many fields as you need
+
+## profile:
+
+```go
+func main() {
+    wall := wallapop.New("npj9q77050ze")
+
+    // In case you:
+    //      just need the profile info, you can use wallapop.SetWallapopProfileInfo()
+    //      just need the items, you can use wallapop.SetWallapopItems()
+    //      just need the reviews, you can use wallapop.SetWallapopReviews()
+    wall.SetWallapopAll()
+
+    // In case you:
+    //      want all the information, leave the parameter empty
+    //      just need the items, you can use wallapop.CliWallapopPrint("profile")
+    //      just need the profile info, you can use wallapop.CliWallapopPrint("items")
+    //      just need the reviews, you can use wallapop.CliWallapopPrint("reviews")
+    //      need multiple information, you can set them, wallapop.CliWallapopPrint("profile", "products", etc.)
+    wall.CliWallapopPrint("profile")
+}
+
+```
+### *Output*
 
 
+| ID           | NAME       | LOCATION CITY | URL SHARE                             | SINCE                   | ... | 
+| :----------- | :--------- | :------------ | :------------------------------------ | :---------------------- | :--- |
+| `abc012345`  | `Dracco NF`| `Barcelona`   | `http://p.wallapop.com/p/0123456789`  | `2018-07-17 21:20:23 CEST`| ... |
+
+
+## Items:
+
+```go
+func main() {
+    ...
+    wall.CliWallapopPrint("items")
+}
+
+```
+### *Output*
+
+|           TITLE            |    PRICE    | CATEGORY |                                 URL             | ...|
+| :------------------------: | :---------: | :------: | :---------------------------------------------: |  :-------: |
+| Mercedes-Benz Sprinter 4x4 | 50000.00 €  |   100    | https://es.wallapop.com/item/xxx-mercedes-00000 | ...|
+| Volkswagen crafter 2.1     | 34000.00 €  |   100    | https://es.wallapop.com/item/xxx-vcrafter-00000 | ... |
+
+
+## Reviews:
+
+```go
+func main() {
+    ...
+    wall.CliWallapopPrint("reviews")
+}
+
+```
+### *Output*
+
+| CATEGORY ID |   USER ID    |         COMMENT         | SCORING | ... |
+| :---------- | :---------- | :--------------------- | ------: | ----: |
+|   12467     | xyz465789   |  Buena experiencia      |    80   | .... |
+|   12467     | xyy789746   | Muy agradable y puntual |   100   | ... |
+
+## All:
+
+```go
+func main() {
+    ...
+    wall.CliWallapopPrint() // leave empty
+}
+
+```
+
+**Ouput: Display all the tables**
 ## Notes
 
 - The package relies on the `httpRequest` package for making HTTP requests to the Wallapop API.
-- The `Wallapop` struct and its associated methods provide a convenient way to retrieve and manage user information, items, and reviews from Wallapop.
+- The `Wallapop` object and its associated methods provide a convenient way to retrieve and manage user information, items, and reviews from Wallapop.
 
 ---

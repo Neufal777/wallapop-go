@@ -9,9 +9,18 @@ import (
 	"github.com/fatih/color"
 	"github.com/wallapop-go/src/httpRequest"
 	loc "github.com/wallapop-go/src/location"
-	vert "github.com/wallapop-go/src/verticals"
 	"github.com/wallapop-go/src/wallapop"
 )
+
+type Car struct {
+	Brand   string `json:"brand"`   //Brand of the car
+	Model   string `json:"model"`   //Model of the car
+	Year    int    `json:"year"`    //Year of the car
+	Km      int    `json:"km"`      //Kilometers of the car
+	Gearbox string `json:"gearbox"` //Gearbox of the car
+	Price   int    `json:"price"`   //Price of the car
+	Fuel    string `json:"fuel"`    //Fuel of the car
+}
 
 const (
 	WALLAPOP_BASE_SEARCH = "https://api.wallapop.com/api/v3/cars/search"
@@ -24,7 +33,7 @@ type Downloader struct {
 	Limit                   int                                `json:"limit"`      //Number of results to return
 	Offset                  int                                `json:"offset"`     //Offset of the results
 	Location                loc.Location                       `json:"location"`   //Location of the search
-	CarFields               vert.Car                           `json:"car_fields"` //Car to search
+	CarFields               Car                                `json:"car_fields"` //Car to search
 	WallapopRequestResponse []wallapop.WallapopRequestResponse `json:"wallapop_request_response"`
 }
 
@@ -48,7 +57,7 @@ func (dow *Downloader) SetSearch(search string) *Downloader {
 	return dow
 }
 
-func (dow *Downloader) SetCarParams(search vert.Car) *Downloader {
+func (dow *Downloader) SetCarParams(search Car) *Downloader {
 	if search.Brand != "" {
 		dow.CarFields.Brand = search.Brand
 	}
