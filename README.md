@@ -64,7 +64,7 @@ func main() {
 **Example:**
 
 ```go
-walla := wallapop.New("abc0982732")
+walla := wallapop.New("abc0123456")
 ```
 
 ```json
