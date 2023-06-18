@@ -32,7 +32,6 @@ type WallapopCategories struct {
 }
 
 func GetWallapopCategoryData(categories ...int) []WallapopCategory {
-	//Wallapop categories
 	var wallacat WallapopCategories
 	requestedCategories := []WallapopCategory{}
 

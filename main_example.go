@@ -4,7 +4,7 @@ import (
 	"github.com/wallapop-go/src/wallapop"
 )
 
-func main() {
+func Main_example() {
 
 	// Create a new Wallapop Object
 	// Set the user ID, can be found in the URL of the user profile page

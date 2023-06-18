@@ -2,29 +2,12 @@ package tools
 
 import (
 	"encoding/json"
-	"fmt"
-	"strings"
 	"time"
 )
 
-func CheckIfCanSplit(input string, separator string) ([]string, bool) {
-	if strings.Contains(input, separator) {
-		values := strings.Split(input, separator)
-		return values, true
-	}
-
-	return nil, false
-}
-
-// PrettyPrintStruct Prints structures with indents
 func PrettyPrintStruct(i interface{}) string {
 	s, _ := json.MarshalIndent(i, "", "\t")
 	return string(s)
-}
-
-// AnyTypeToString Converts any type to <string> type
-func AnyTypeToString(input interface{}) string {
-	return fmt.Sprintf("%v", input)
 }
 
 func TimeFormatter(timestamp int64) string {
