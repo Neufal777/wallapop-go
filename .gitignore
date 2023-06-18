@@ -1,5 +1,5 @@
-
-vendor/
+/vendor/
 *.json
-Endpoints/
-wallapop-go
+/Endpoints/
+/wallapop-go
+/file-or-directory-name
