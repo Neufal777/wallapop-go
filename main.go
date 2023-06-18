@@ -1,15 +1,25 @@
 package main
 
 import (
-	"log"
-
-	"github.com/walla-chollo/src/wallapop"
+	"github.com/wallapop-go/src/wallapop"
 )
 
 func main() {
-	wallapop := wallapop.New("vjrd4dm3786k")
+	wall := wallapop.New("wzvy4v2l07zl")
 
-	wallapop.SetWallapopCompleteProfile()
+	// Sets ALL the information for the user (profile info, items, reviews, etc.)
+	// In case you:
+	// just need the profile info, you can use wallapop.SetWallapopProfileInfo()
+	// just need the items, you can use wallapop.SetWallapopItems()
+	// just need the reviews, you can use wallapop.SetWallapopReviews()
+	wall.SetWallapopAll()
 
-	log.Println(wallapop)
+	// In case you:
+	// want all the information, leave the parameter empty
+	// just need the items, you can use wallapop.CliWallapopPrint("profile")
+	// just need the profile info, you can use wallapop.CliWallapopPrint("items")
+	// just need the reviews, you can use wallapop.CliWallapopPrint("reviews")
+	// need multiple information, you can set them all, wallapop.CliWallapopPrint("profile", "products", etc.)
+	wall.CliWallapopPrint("items", "profile")
+
 }

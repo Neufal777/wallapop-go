@@ -1,6 +1,26 @@
 package wallapop
 
-import "github.com/walla-chollo/src/location"
+import "github.com/wallapop-go/src/location"
+
+type WallapopReviews []struct {
+	Item   ItemReview `json:"item,omitempty"`
+	Review ReviewInfo `json:"review,omitempty"`
+	User   User       `json:"user,omitempty"`
+	Type   string     `json:"type"`
+}
+
+type ItemReview struct {
+	CategoryID int `json:"category_id"`
+}
+
+type ReviewInfo struct {
+	ID                    string `json:"id"`
+	Date                  int64  `json:"date"`
+	Scoring               int    `json:"scoring"`
+	IsShippingTransaction bool   `json:"is_shipping_transaction"`
+	CanTranslate          bool   `json:"can_translate"`
+	Comments              string `json:"comments"`
+}
 
 type Image struct {
 	Original       string `json:"original"`
@@ -13,23 +33,13 @@ type Image struct {
 	OriginalHeight int    `json:"original_height"`
 }
 
-type UserImage struct {
-	Original       string `json:"original"`
-	Xsmall         string `json:"xsmall"`
-	Small          string `json:"small"`
-	Large          string `json:"large"`
-	Medium         string `json:"medium"`
-	Xlarge         string `json:"xlarge"`
-	OriginalWidth  int    `json:"original_width"`
-	OriginalHeight int    `json:"original_height"`
-}
-
 type User struct {
-	ID        string    `json:"id"`
-	MicroName string    `json:"micro_name"`
-	Image     UserImage `json:"image"`
-	Online    bool      `json:"online"`
-	Kind      string    `json:"kind"`
+	ID        string `json:"id"`
+	MicroName string `json:"micro_name"`
+	Image     Image  `json:"image"`
+	Online    bool   `json:"online"`
+	Kind      string `json:"kind"`
+	WebSlug   string `json:"web_slug"`
 }
 
 type Flags struct {
@@ -111,26 +121,20 @@ type WallapopRequestResponse struct {
 	SearchPoint     location.Location `json:"search_point"`
 }
 
+type Price struct {
+	Amount   float64 `json:"amount"`
+	Currency string  `json:"currency"`
+}
+
 type WallapopItems struct {
 	Data []struct {
-		ID          string `json:"id"`
-		Title       string `json:"title"`
-		Description string `json:"description"`
-		CategoryID  string `json:"category_id"`
-		Slug        string `json:"slug"`
-		Images      []struct {
-			ID           string `json:"id"`
-			AverageColor string `json:"average_color"`
-			Urls         struct {
-				Small  string `json:"small"`
-				Medium string `json:"medium"`
-				Big    string `json:"big"`
-			} `json:"urls"`
-		} `json:"images"`
-		Price struct {
-			Amount   float64 `json:"amount"`
-			Currency string  `json:"currency"`
-		} `json:"price"`
+		ID             string  `json:"id"`
+		Title          string  `json:"title"`
+		Description    string  `json:"description"`
+		CategoryID     string  `json:"category_id"`
+		Slug           string  `json:"slug"`
+		Images         []Image `json:"images"`
+		Price          Price   `json:"price"`
 		TypeAttributes struct {
 			BodyType struct {
 				Value    string `json:"value"`
@@ -205,33 +209,11 @@ type WallapopItems struct {
 				IconText string `json:"icon_text"`
 			} `json:"brand"`
 		} `json:"type_attributes,omitempty"`
-		Shipping struct {
-			ItemIsShippable    bool `json:"item_is_shippable"`
-			UserAllowsShipping bool `json:"user_allows_shipping"`
-		} `json:"shipping"`
+		Shipping Shipping `json:"shipping"`
 	} `json:"data"`
 	Meta struct {
 		Next string `json:"next"`
 	} `json:"meta"`
-}
-
-type WallapopReviews []struct {
-	Item struct {
-		CategoryID int `json:"category_id"`
-	} `json:"item,omitempty"`
-	Review struct {
-		ID                    string `json:"id"`
-		Date                  int64  `json:"date"`
-		Scoring               int    `json:"scoring"`
-		IsShippingTransaction bool   `json:"is_shipping_transaction"`
-		CanTranslate          bool   `json:"can_translate"`
-	} `json:"review,omitempty"`
-	User struct {
-		ID        string `json:"id"`
-		MicroName string `json:"micro_name"`
-		WebSlug   string `json:"web_slug"`
-	} `json:"user,omitempty"`
-	Type string `json:"type"`
 }
 
 type WallapopProfileInfo struct {
@@ -245,7 +227,7 @@ type WallapopProfileInfo struct {
 		AverageHexColor string `json:"average_hex_color"`
 		UrlsBySize      struct {
 			Small    string `json:"small"`
-			Xmall    string `json:"xmall"`
+			Xsmall   string `json:"xsmall"`
 			Original string `json:"original"`
 			Large    string `json:"large"`
 			Xlarge   string `json:"xlarge"`
@@ -285,141 +267,34 @@ type WallapopProfileInfo struct {
 		Link                              string  `json:"link"`
 		Latitude                          float64 `json:"latitude"`
 		Longitude                         float64 `json:"longitude"`
+		CountryCode                       string  `json:"country_code"`
+		City                              string  `json:"city"`
 		OpeningHours                      string  `json:"opening_hours"`
-		NewChatNotification               bool    `json:"new_chat_notification"`
+		SmsNotification                   bool    `json:"sms_notification"`
+		ChatNotification                  bool    `json:"chat_notification"`
+		NewsNotification                  bool    `json:"news_notification"`
+		ShowOnline                        bool    `json:"show_online"`
 		OnlyChatPhoneNotification         bool    `json:"only_chat_phone_notification"`
 		ConsentThirdPartiesUseData        bool    `json:"consent_third_parties_use_data"`
-		NewsNotification                  bool    `json:"news_notification"`
-		ModifiedDate                      int64   `json:"modified_date"`
 	} `json:"extra_info"`
+	LanguageCode    string `json:"language_code"`
+	RatingAverage   int    `json:"rating_average"`
+	RatingCounts    int    `json:"rating_counts"`
+	IsVisible       bool   `json:"is_visible"`
+	ReportedAsScam  bool   `json:"reported_as_scam"`
+	LastActivity    int64  `json:"last_activity"`
+	ScamReports     int    `json:"scam_reports"`
+	HasScamReports  bool   `json:"has_scam_reports"`
+	IsFeatured      bool   `json:"is_featured"`
+	LastUpdate      int64  `json:"last_update"`
+	TicketsCreated  int    `json:"tickets_created"`
+	TicketsResolved int    `json:"tickets_resolved"`
 }
 
-type WallapopItem struct {
-	ID    string `json:"id"`
-	Title struct {
-		Original string `json:"original"`
-	} `json:"title"`
-	Description struct {
-		Original string `json:"original"`
-	} `json:"description"`
-	Taxonomy []struct {
-		ID   string `json:"id"`
-		Name string `json:"name"`
-		Icon string `json:"icon"`
-	} `json:"taxonomy"`
-	Type string `json:"type"`
-	User struct {
-		ID string `json:"id"`
-	} `json:"user"`
-	Slug         string `json:"slug"`
-	ShareURL     string `json:"share_url"`
-	ModifiedDate int    `json:"modified_date"`
-	Images       []struct {
-		ID           string `json:"id"`
-		AverageColor string `json:"average_color"`
-		Urls         struct {
-			Small  string `json:"small"`
-			Medium string `json:"medium"`
-			Big    string `json:"big"`
-		} `json:"urls"`
-	} `json:"images"`
-	Price struct {
-		Cash struct {
-			Amount   float64 `json:"amount"`
-			Currency string  `json:"currency"`
-		} `json:"cash"`
-	} `json:"price"`
-	Location struct {
-		Latitude     float64 `json:"latitude"`
-		Longitude    float64 `json:"longitude"`
-		Approximated bool    `json:"approximated"`
-		CountryCode  string  `json:"country_code"`
-		City         string  `json:"city"`
-		PostalCode   string  `json:"postal_code"`
-	} `json:"location"`
-	TypeAttributes struct {
-		Brand struct {
-			Value    string `json:"value"`
-			Title    string `json:"title"`
-			Text     string `json:"text"`
-			IconText string `json:"icon_text"`
-		} `json:"brand"`
-		Model struct {
-			Value    string `json:"value"`
-			Title    string `json:"title"`
-			Text     string `json:"text"`
-			IconText string `json:"icon_text"`
-		} `json:"model"`
-		Version struct {
-			Value    string `json:"value"`
-			Title    string `json:"title"`
-			Text     string `json:"text"`
-			IconText string `json:"icon_text"`
-		} `json:"version"`
-		Year struct {
-			Value    string `json:"value"`
-			Title    string `json:"title"`
-			Text     string `json:"text"`
-			IconText string `json:"icon_text"`
-		} `json:"year"`
-		GearBox struct {
-			Value    string `json:"value"`
-			Title    string `json:"title"`
-			Text     string `json:"text"`
-			IconText string `json:"icon_text"`
-		} `json:"gear_box"`
-		BodyType struct {
-			Value    string `json:"value"`
-			Title    string `json:"title"`
-			Text     string `json:"text"`
-			IconText string `json:"icon_text"`
-		} `json:"body_type"`
-		Engine struct {
-			Value    string `json:"value"`
-			Title    string `json:"title"`
-			Text     string `json:"text"`
-			IconText string `json:"icon_text"`
-		} `json:"engine"`
-		Km struct {
-			Value    string `json:"value"`
-			Title    string `json:"title"`
-			Text     string `json:"text"`
-			IconText string `json:"icon_text"`
-		} `json:"km"`
-		Doors struct {
-			Value    string `json:"value"`
-			Title    string `json:"title"`
-			Text     string `json:"text"`
-			IconText string `json:"icon_text"`
-		} `json:"doors"`
-		Seats struct {
-			Value    string `json:"value"`
-			Title    string `json:"title"`
-			Text     string `json:"text"`
-			IconText string `json:"icon_text"`
-		} `json:"seats"`
-		HorsePower struct {
-			Value    string `json:"value"`
-			Title    string `json:"title"`
-			Text     string `json:"text"`
-			IconText string `json:"icon_text"`
-		} `json:"horse_power"`
-	} `json:"type_attributes"`
-	SupportsShipping struct {
-	} `json:"supports_shipping"`
-	Shipping struct {
-		ItemIsShippable    bool `json:"item_is_shippable"`
-		UserAllowsShipping bool `json:"user_allows_shipping"`
-	} `json:"shipping"`
-	Hashtags struct {
-		Values []string `json:"values"`
-	} `json:"hashtags"`
-	Favorited struct {
-		Flag bool `json:"flag"`
-	} `json:"favorited"`
-	Counters struct {
-		Views         int `json:"views"`
-		Favorites     int `json:"favorites"`
-		Conversations int `json:"conversations"`
-	} `json:"counters"`
+type WallapopUserResponse struct {
+	Data struct {
+		ID          string              `json:"id"`
+		Type        string              `json:"type"`
+		ProfileInfo WallapopProfileInfo `json:"profile_info"`
+	} `json:"data"`
 }

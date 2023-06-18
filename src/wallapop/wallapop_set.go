@@ -2,7 +2,7 @@ package wallapop
 
 // SetWallapopItems sets the WallapopItems struct for a specific category.
 // If no category is provided, it sets the items for all categories.
-// Categories options: Cars: "100"
+// Currently, only one category can be set. future: multiple categories
 func (w *Wallapop) SetWallapopItems(category ...string) *Wallapop {
 	if len(category) > 0 {
 		w.WallapopUserItems = w.HttpWallapopProfileItems(category[0])
@@ -25,8 +25,8 @@ func (w *Wallapop) SetWallapopReviews() *Wallapop {
 	return w
 }
 
-// SetWallapopCompleteProfile sets the Wallapop struct
-func (w *Wallapop) SetWallapopCompleteProfile() *Wallapop {
+// SetWallapopAll sets all the information
+func (w *Wallapop) SetWallapopAll() *Wallapop {
 	w.SetWallapopProfileInfo()
 	w.SetWallapopItems()
 	w.SetWallapopReviews()

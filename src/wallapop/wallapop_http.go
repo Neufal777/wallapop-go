@@ -2,12 +2,14 @@ package wallapop
 
 import (
 	"fmt"
+	"log"
 
-	"github.com/walla-chollo/src/httpRequest"
+	"github.com/wallapop-go/src/httpRequest"
 )
 
 const (
 	API_V3_USERS = "https://api.wallapop.com/api/v3/users/"
+	API_V3_ITEM  = "https://api.wallapop.com/api/v3/items/"
 )
 
 func handleError(err error) {
@@ -18,6 +20,7 @@ func handleError(err error) {
 func (w *Wallapop) HttpWallapop(path string, result interface{}) {
 	url := fmt.Sprintf("%s%s%s", API_V3_USERS, w.User.ID, path)
 
+	log.Println(url)
 	err := httpRequest.GetAPIResponse(url, result)
 	if err != nil {
 		handleError(err)
@@ -48,6 +51,7 @@ func (w *Wallapop) HttpWallapopProfileItems(category ...string) WallapopItems {
 		url = fmt.Sprintf("/items?category_id=%s", category[0])
 	}
 
+	log.Println(url)
 	w.HttpWallapop(url, &items)
 	return items
 }

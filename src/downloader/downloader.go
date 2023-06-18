@@ -7,10 +7,10 @@ import (
 	"time"
 
 	"github.com/fatih/color"
-	"github.com/walla-chollo/src/httpRequest"
-	"github.com/walla-chollo/src/location"
-	"github.com/walla-chollo/src/verticals"
-	"github.com/walla-chollo/src/wallapop"
+	"github.com/wallapop-go/src/httpRequest"
+	loc "github.com/wallapop-go/src/location"
+	vert "github.com/wallapop-go/src/verticals"
+	"github.com/wallapop-go/src/wallapop"
 )
 
 const (
@@ -23,13 +23,13 @@ type Downloader struct {
 	Order                   string                             `json:"order"`      //Order by: most_relevance, etc
 	Limit                   int                                `json:"limit"`      //Number of results to return
 	Offset                  int                                `json:"offset"`     //Offset of the results
-	Location                location.Location                  `json:"location"`   //Location of the search
-	CarFields               verticals.Car                      `json:"car_fields"` //Car to search
+	Location                loc.Location                       `json:"location"`   //Location of the search
+	CarFields               vert.Car                           `json:"car_fields"` //Car to search
 	WallapopRequestResponse []wallapop.WallapopRequestResponse `json:"wallapop_request_response"`
 }
 
 func (dow *Downloader) SetLocation(address string) *Downloader {
-	searchGeo := location.HereGeoCoordinates(address)
+	searchGeo := loc.HereGeoCoordinates(address)
 	dow.Location.Longitude = searchGeo.Longitude
 	dow.Location.Latitude = searchGeo.Latitude
 	dow.Location.Address = searchGeo.Address
@@ -48,7 +48,7 @@ func (dow *Downloader) SetSearch(search string) *Downloader {
 	return dow
 }
 
-func (dow *Downloader) SetCarParams(search verticals.Car) *Downloader {
+func (dow *Downloader) SetCarParams(search vert.Car) *Downloader {
 	if search.Brand != "" {
 		dow.CarFields.Brand = search.Brand
 	}
@@ -145,21 +145,3 @@ func (dow *Downloader) GetWallapopContent() *Downloader {
 
 	return dow
 }
-
-// // SetUserToItems maps the results with the user ID and the Post ID
-// func (dow *Downloader) SetUserToItems() map[string][]string {
-// 	// Map the results with the user ID and the Post ID
-// 	mapResults := make(map[string][]string)
-
-// 	for _, response := range dow.WallapopRequestResponse {
-// 		for _, item := range response.SearchObjects {
-// 			// Convert float to string
-// 			UserID := item.Content.User.ID
-// 			PostID := item.Content.ID
-
-// 			mapResults[UserID] = append(mapResults[UserID], PostID)
-// 		}
-// 	}
-
-// 	return mapResults
-// }

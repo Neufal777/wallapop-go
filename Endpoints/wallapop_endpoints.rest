@@ -1,13 +1,13 @@
 
-GET https://api.wallapop.com/api/v3/users/lqzmmeyv9yzv
+GET https://api.wallapop.com/api/v3/users/user_id
 
-GET https://api.wallapop.com/api/v3/users/lqzmmeyv9yzv/items
+GET https://api.wallapop.com/api/v3/users/user_id/items
 
-GET https://api.wallapop.com/api/v3/users/lqzmmeyv9yzv/reviews
+GET https://api.wallapop.com/api/v3/users/user_id/reviews
 
 
 # items by USER and by ID
-GET https://api.wallapop.com/api/v3/users/vjrd4dm3786k/items?category_id=100
+GET https://api.wallapop.com/api/v3/users/user_id/items?category_id=100
 
-GET https://api.wallapop.com/api/v3/items/p61ywex3x265
+GET https://api.wallapop.com/api/v3/items/user_id
 

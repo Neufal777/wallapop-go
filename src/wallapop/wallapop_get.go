@@ -14,6 +14,3 @@ func (w *Wallapop) GetWallapopItems() WallapopItems {
 func (w *Wallapop) GetWallapopReviews() WallapopReviews {
 	return w.WallapopUserReviews
 }
-
-// Get information for a specific item
-// https://api.wallapop.com/api/v3/items/p61ywex3x265
