@@ -44,9 +44,6 @@ func main() {
 
 }
 
-
-
-
 ```
 
 - **`Wallapop`**: Represents the main structure that holds user information, profile data, items, and reviews.
@@ -65,6 +62,11 @@ func main() {
 - **`New(UserID string) *Wallapop`**: Returns a new instance of the `Wallapop` object with the specified user ID (the ID will be used to get the different data we might need in the future).
 
 **Example:**
+
+```go
+walla := wallapop.New("abc0982732")
+```
+
 ```json
 {
   "User": {
@@ -79,6 +81,11 @@ func main() {
 - **`SetWallapopProfileInfo() *Wallapop`**: Sets the `WallapopProfileInfo` struct.
 
 **Example:**
+
+```go
+wallapop.SetWallapopProfileInfo()
+```
+
 ```json
 {
 	"User": {
@@ -118,6 +125,11 @@ func main() {
 
 **Example:**
 
+```go
+wallapop.SetWallapopItems()
+```
+
+
 ```json
 {
 	"User": {
@@ -148,6 +160,11 @@ func main() {
 
 **Example:**
 
+```go
+wallapop.SetWallapopReviews()
+```
+
+
 ```json
 {
 	"User": {
@@ -177,9 +194,18 @@ func main() {
 ```
 - **`SetWallapopAll() *Wallapop`**: Sets all the user information including profile, items, and reviews.
 
+```go
+wallapop.SetWallapopAll()
+```
+
 - **`GetWallapopProfileInfo() WallapopProfileInfo`**: Returns the `WallapopProfileInfo` containing user profile information.
 
    **Example:**
+   
+```go
+wallapop.GetWallapopProfileInfo()
+```
+
    ```json
    {
      "id": "abcde0123456789",
@@ -204,11 +230,23 @@ func main() {
 
 - **`GetWallapopItems() WallapopItems`**: Returns the `WallapopItems` object containing user items.
 
+```go
+wallapop.GetWallapopItems()
+```
+
 - **`GetWallapopReviews() WallapopReviews`**: Returns the `WallapopReviews` object containing user reviews.
+
+```go
+wallapop.GetWallapopReviews()
+```
 
 - **`CliWallapopPrint(displayMode ...string)`**: Prints user profile information, items, and reviews based on the provided display mode. The display mode determines which information to print. If no display mode is provided, it defaults to printing all information.
 
 **Example(s):** Note: You can add as many fields as you need
+
+```go
+wallapop.CliWallapopPrint()
+```
 
 ## profile:
 
