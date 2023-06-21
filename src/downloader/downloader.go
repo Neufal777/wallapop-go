@@ -2,6 +2,7 @@ package downloader
 
 import (
 	"fmt"
+	"log"
 	"strconv"
 	"strings"
 	"time"
@@ -120,7 +121,7 @@ func (dow *Downloader) Print() {
 			km := strconv.Itoa(item.Content.Km)
 
 			// Print the results
-			fmt.Println("[ "+price+" € ] [ "+km+" km]", item.Content.Title, "https://es.wallapop.com/item/"+item.Content.WebSlug)
+			fmt.Printf("[ %s €] [%s] Km, %s https://es.wallapop.com/item/%s \n", price, km, item.Content.Title, item.Content.WebSlug)
 		}
 	}
 }
@@ -131,14 +132,14 @@ func (dow *Downloader) GetWallapopContentPage() *Downloader {
 		WALLAPOP_BASE_SEARCH, dow.Search, dow.Location.Latitude, dow.Offset, dow.Category, dow.Location.Longitude, dow.CarFields.Price, dow.CarFields.Year, dow.CarFields.Km, dow.CarFields.Fuel, dow.CarFields.Gearbox)
 
 	content := wallapop.WallapopRequestResponse{}
-	err := httpRequest.GetAPIResponse(url, &content)
+	err := httpRequest.GetAPIResponse(url, &content, nil)
 
+	log.Println(url)
 	if err != nil {
 		fmt.Printf("Failed to make the HTTP request: %s\n", err)
 	}
 
 	dow.WallapopRequestResponse = append(dow.WallapopRequestResponse, content)
-
 	return dow
 }
 

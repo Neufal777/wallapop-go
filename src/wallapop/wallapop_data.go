@@ -35,7 +35,7 @@ func GetWallapopCategoryData(categories ...int) []WallapopCategory {
 	var wallacat WallapopCategories
 	requestedCategories := []WallapopCategory{}
 
-	err := httpRequest.GetAPIResponse(CategoriesBaseURL, &wallacat)
+	err := httpRequest.GetAPIResponse(CategoriesBaseURL, &wallacat, nil)
 
 	if err != nil {
 		fmt.Printf("Error: %s\n", err)

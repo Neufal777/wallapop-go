@@ -1,10 +1,10 @@
-package main
+package examples
 
 import (
 	"github.com/wallapop-go/src/wallapop"
 )
 
-func mainExample() {
+func ReadmeExample() {
 	// Create a new Wallapop Object
 	// Set the user ID, can be found in the URL of the user profile page
 	// Example: https://es.wallapop.com/app/user/ocasionplusg-437879034-8j3y83q89169/published
