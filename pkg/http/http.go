@@ -1,4 +1,4 @@
-package httpRequest
+package http
 
 import (
 	"encoding/json"

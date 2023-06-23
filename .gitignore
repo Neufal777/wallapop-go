@@ -1,6 +1,4 @@
 /vendor/
 *.json
-/Endpoints/
 /wallapop-go
-/file-or-directory-name
-/main.go
+/search/

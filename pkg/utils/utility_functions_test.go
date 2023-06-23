@@ -1,4 +1,4 @@
-package wallapop
+package utils
 
 import (
 	"net/http"
@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/wallapop-go/pkg/models"
 )
 
 func TestGetWallapopCategoryData(t *testing.T) {
@@ -51,7 +52,7 @@ func TestGetWallapopCategoryData(t *testing.T) {
 	categories := GetWallapopCategoryData(100, 200)
 
 	// Define the expected categories
-	expectedCategories := []WallapopCategory{
+	expectedCategories := []models.WallapopCategory{
 		{
 			ID:         100,
 			Name:       "Cars",

@@ -1,4 +1,6 @@
-package wallapop
+package api
+
+import "github.com/wallapop-go/pkg/models"
 
 // ├── Setters  for 'wallapop'/
 // │   ├── SetWallapopItems()
@@ -13,9 +15,9 @@ package wallapop
 
 type Wallapop struct {
 	User                struct{ ID string }
-	WallapopUserProfile WallapopProfileInfo
-	WallapopUserItems   WallapopItems
-	WallapopUserReviews WallapopReviews
+	WallapopUserProfile models.WallapopProfileInfo
+	WallapopUserItems   models.WallapopItems
+	WallapopUserReviews models.WallapopReviews
 }
 
 // New returns a new Wallapop struct
@@ -59,16 +61,16 @@ func (w *Wallapop) SetWallapopAll() *Wallapop {
 }
 
 // GetWallapopProfileInfo returns the WallapopProfileInfo struct
-func (w *Wallapop) GetWallapopProfileInfo() WallapopProfileInfo {
+func (w *Wallapop) GetWallapopProfileInfo() models.WallapopProfileInfo {
 	return w.WallapopUserProfile
 }
 
 // GetWallapopItems returns the WallapopItems struct
-func (w *Wallapop) GetWallapopItems() WallapopItems {
+func (w *Wallapop) GetWallapopItems() models.WallapopItems {
 	return w.WallapopUserItems
 }
 
 // GetWallapopReviews returns the WallapopReviews struct
-func (w *Wallapop) GetWallapopReviews() WallapopReviews {
+func (w *Wallapop) GetWallapopReviews() models.WallapopReviews {
 	return w.WallapopUserReviews
 }

@@ -1,7 +1,8 @@
 package examples
 
 import (
-	"github.com/wallapop-go/src/wallapop"
+	"github.com/wallapop-go/pkg/api"
+	"github.com/wallapop-go/pkg/utils"
 )
 
 func ReadmeExample() {
@@ -11,14 +12,14 @@ func ReadmeExample() {
 	// The user ID in this case is: 8j3y83q89169
 
 	// In case you want to retrieve specific information, you can use the following methods:
-	wall := wallapop.New("8j3y83q89169")
+	wall := api.New("8j3y83q89169")
 
 	wall.SetWallapopItems()       // Optional
 	wall.SetWallapopProfileInfo() // Optional
 	wall.SetWallapopReviews()     // Optional
 
 	// The code above is the same as:
-	_ = wallapop.New("8j3y83q89169")
+	_ = api.New("8j3y83q89169")
 	wall.SetWallapopAll() // This method sets all the information (profile, items, reviews)
 
 	// To retrieve the data set to the Wallapop Object, you can use the following methods:
@@ -29,13 +30,13 @@ func ReadmeExample() {
 	// Regarding the tables, you can display them in the CLI with the following methods:
 
 	// Display the tables with the information, you can set the tables you want to display
-	wall.CliWallapopPrint("profile", "items") // Options: profile, items, reviews
+	utils.CliWallapopPrint(wall, "profile", "items") // Options: profile, items, reviews
 
 	// Display all, left empty, it will display all the tables
-	wall.CliWallapopPrint()
+	utils.CliWallapopPrint(wall)
 
 	// Categories are identified by their ID, you can find the ID in Item object (CategoryID)
 	// If you need to retrieve the category information, you can use the following function,
 	// This will return a WallapopCategory{...} object with the information of the category
-	_ = wallapop.GetWallapopCategoryData(14000) // 14000 is the ID of the category
+	// _ = api.GetWallapopCategoryData(14000) // 14000 is the ID of the category
 }

@@ -1,4 +1,4 @@
-package downloader
+package search
 
 import (
 	"fmt"
@@ -8,9 +8,13 @@ import (
 	"time"
 
 	"github.com/fatih/color"
-	"github.com/wallapop-go/src/httpRequest"
-	loc "github.com/wallapop-go/src/location"
-	"github.com/wallapop-go/src/wallapop"
+	"github.com/wallapop-go/pkg/http"
+	"github.com/wallapop-go/pkg/models"
+	"github.com/wallapop-go/pkg/services"
+)
+
+const (
+	WALLAPOP_BASE_SEARCH = "https://api.wallapop.com/api/v3/cars/search"
 )
 
 type Car struct {
@@ -23,23 +27,19 @@ type Car struct {
 	Fuel    string `json:"fuel"`    //Fuel of the car
 }
 
-const (
-	WALLAPOP_BASE_SEARCH = "https://api.wallapop.com/api/v3/cars/search"
-)
-
 type Downloader struct {
-	Search                  string                             `json:"search"`     //Search query
-	Category                string                             `json:"category"`   //Categories: cars (100), etc..
-	Order                   string                             `json:"order"`      //Order by: most_relevance, etc
-	Limit                   int                                `json:"limit"`      //Number of results to return
-	Offset                  int                                `json:"offset"`     //Offset of the results
-	Location                loc.Location                       `json:"location"`   //Location of the search
-	CarFields               Car                                `json:"car_fields"` //Car to search
-	WallapopRequestResponse []wallapop.WallapopRequestResponse `json:"wallapop_request_response"`
+	Search                  string                           `json:"search"`     //Search query
+	Category                string                           `json:"category"`   //Categories: cars (100), etc..
+	Order                   string                           `json:"order"`      //Order by: most_relevance, etc
+	Limit                   int                              `json:"limit"`      //Number of results to return
+	Offset                  int                              `json:"offset"`     //Offset of the results
+	Location                models.Location                  `json:"location"`   //Location of the search
+	CarFields               Car                              `json:"car_fields"` //Car to search
+	WallapopRequestResponse []models.WallapopRequestResponse `json:"wallapop_request_response"`
 }
 
 func (dow *Downloader) SetLocation(address string) *Downloader {
-	searchGeo := loc.HereGeoCoordinates(address)
+	searchGeo := services.HereGeoCoordinates(address)
 	dow.Location.Longitude = searchGeo.Longitude
 	dow.Location.Latitude = searchGeo.Latitude
 	dow.Location.Address = searchGeo.Address
@@ -131,8 +131,8 @@ func (dow *Downloader) GetWallapopContentPage() *Downloader {
 	url := fmt.Sprintf("%s?keywords=%s&filters_source=search_box&latitude=%f&start=%d&order_by=most_relevance&step=2&category_ids=%s&longitude=%f&max_sale_price=%d&max_year=%d&max_km=%d&engine=%s&gearbox=%s",
 		WALLAPOP_BASE_SEARCH, dow.Search, dow.Location.Latitude, dow.Offset, dow.Category, dow.Location.Longitude, dow.CarFields.Price, dow.CarFields.Year, dow.CarFields.Km, dow.CarFields.Fuel, dow.CarFields.Gearbox)
 
-	content := wallapop.WallapopRequestResponse{}
-	err := httpRequest.GetAPIResponse(url, &content, nil)
+	content := models.WallapopRequestResponse{}
+	err := http.GetAPIResponse(url, &content, nil)
 
 	log.Println(url)
 	if err != nil {

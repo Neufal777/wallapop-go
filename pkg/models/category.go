@@ -1,10 +1,4 @@
-package wallapop
-
-import (
-	"fmt"
-
-	"github.com/wallapop-go/src/httpRequest"
-)
+package models
 
 // Get different data from wallapop
 // Category information
@@ -29,25 +23,4 @@ type WallapopCategory struct {
 
 type WallapopCategories struct {
 	Categories []WallapopCategory `json:"categories"`
-}
-
-func GetWallapopCategoryData(categories ...int) []WallapopCategory {
-	var wallacat WallapopCategories
-	requestedCategories := []WallapopCategory{}
-
-	err := httpRequest.GetAPIResponse(CategoriesBaseURL, &wallacat, nil)
-
-	if err != nil {
-		fmt.Printf("Error: %s\n", err)
-	}
-
-	for _, category := range wallacat.Categories {
-		for _, requestedCategory := range categories {
-			if category.ID == requestedCategory {
-				requestedCategories = append(requestedCategories, category)
-			}
-		}
-	}
-
-	return requestedCategories
 }
