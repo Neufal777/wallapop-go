@@ -2,3 +2,5 @@
 *.json
 /wallapop-go
 /search/
+*.DS_Store
+.DS_Store
