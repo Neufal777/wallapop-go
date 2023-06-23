@@ -28,6 +28,11 @@ Note: Make sure you have Go installed and your `$GOPATH` environment variable pr
 **Example:**
 ```go
 
+import (
+	"github.com/wallapop-go/pkg/api"
+	"github.com/wallapop-go/pkg/utils"
+)
+
 func main() {
 
 	// Create a new Wallapop Object
@@ -36,33 +41,33 @@ func main() {
 	// The user ID in this case is: 8j3y83q89169
 
 	// In case you want to retrieve specific information, you can use the following methods:
-	wall := wallapop.New("8j3y83q89169")
+	wallapop := api.New("8j3y83q89169")
 
-	wall.SetWallapopItems()       // Optional
-	wall.SetWallapopProfileInfo() // Optional
-	wall.SetWallapopReviews()     // Optional
+	wallapop.SetWallapopItems()       // Optional
+	wallapop.SetWallapopProfileInfo() // Optional
+	wallapop.SetWallapopReviews()     // Optional
 
 	// The code above is the same as:
-	_ = wallapop.New("8j3y83q89169")
-	wall.SetWallapopAll() // This method sets all the information (profile, items, reviews)
+	_ = api.New("8j3y83q89169")
+	wallapop.SetWallapopAll() // This method sets all the information (profile, items, reviews)
 
 	// To retrieve the data set to the Wallapop Object, you can use the following methods:
-	wall.GetWallapopItems()       // return a WallapopItems{...}
-	wall.GetWallapopProfileInfo() // return WallapopProfileInfo{...}
-	wall.GetWallapopReviews()     // return WallapopReviews{...}
+	wallapop.GetWallapopItems()       // return a WallapopItems{...}
+	wallapop.GetWallapopProfileInfo() // return WallapopProfileInfo{...}
+	wallapop.GetWallapopReviews()     // return WallapopReviews{...}
 
 	// Regarding the tables, you can display them in the CLI with the following methods:
 
 	// Display the tables with the information, you can set the tables you want to display
-	wall.CliWallapopPrint("profile", "items") // Options: profile, items, reviews
+	utils.CliWallapopPrint(wallapop, "profile", "items") // Options: profile, items, reviews
 
 	// Display all, left empty, it will display all the tables
-	wall.CliWallapopPrint()
+	utils.CliWallapopPrint(wallapop)
 
 	// Categories are identified by their ID, you can find the ID in Item object (CategoryID)
 	// If you need to retrieve the category information, you can use the following function,
 	// This will return a WallapopCategory{...} object with the information of the category
-	category := wallapop.GetWallapopCategoryData(14000) // 14000 is the ID of the category
+	category := utils.GetWallapopCategoryData(14000) // 14000 is the ID of the category
 
 }
 
@@ -86,7 +91,7 @@ func main() {
 **Example:**
 
 ```go
-walla := wallapop.New("abc0123456")
+walla := api.New("abc0123456")
 ```
 
 ```json
@@ -267,20 +272,20 @@ wallapop.GetWallapopReviews()
 **Example(s):** Note: You can add as many fields as you need
 
 ```go
-wallapop.CliWallapopPrint()
+utils.CliWallapopPrint(wallapop)
 ```
 
 ## profile:
 
 ```go
 func main() {
-    wall := wallapop.New("npj9q77050ze")
+    wallapop := api.New("npj9q77050ze")
 
     // In case you:
     //      just need the profile info, you can use wallapop.SetWallapopProfileInfo()
     //      just need the items, you can use wallapop.SetWallapopItems()
     //      just need the reviews, you can use wallapop.SetWallapopReviews()
-    wall.SetWallapopAll()
+    wallapop.SetWallapopAll()
 
     // In case you:
     //      want all the information, leave the parameter empty
@@ -288,7 +293,7 @@ func main() {
     //      just need the profile info, you can use wallapop.CliWallapopPrint("items")
     //      just need the reviews, you can use wallapop.CliWallapopPrint("reviews")
     //      need multiple information, you can set them, wallapop.CliWallapopPrint("profile", "products", etc.)
-    wall.CliWallapopPrint("profile")
+    utils.CliWallapopPrint(wallapop,"profile")
 }
 
 ```
@@ -305,7 +310,7 @@ func main() {
 ```go
 func main() {
     ...
-    wall.CliWallapopPrint("items")
+    utils.CliWallapopPrint(wallapop,"items")
 }
 
 ```
@@ -322,7 +327,7 @@ func main() {
 ```go
 func main() {
     ...
-    wall.CliWallapopPrint("reviews")
+    utils.CliWallapopPrint(wallapop,"reviews")
 }
 
 ```
@@ -338,7 +343,7 @@ func main() {
 ```go
 func main() {
     ...
-    wall.CliWallapopPrint() // leave empty
+    utils.CliWallapopPrint(wallapop) // leave empty
 }
 
 ```
@@ -346,7 +351,7 @@ func main() {
 **Ouput: Display all the tables**
 ## Notes
 
-- The package relies on the `httpRequest` package for making HTTP requests to the Wallapop API.
+- The package relies on the `http` package for making HTTP requests to the Wallapop API.
 - The `Wallapop` object and its associated methods provide a convenient way to retrieve and manage user information, items, and reviews from Wallapop.
 
 ---
