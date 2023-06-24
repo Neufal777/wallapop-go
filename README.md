@@ -35,6 +35,26 @@ import (
 
 func main() {
 
+ 	wallapop := api.New("8j3y83q89169") // 8j3y83q89169 -> UserID
+  
+	wallapop.SetWallapopAll() // Set the user information
+  	
+	utils.CliWallapopPrint(wallapop, "profile", "items", "reviews") //Options: profile, items, reviews
+}
+
+```
+
+
+**Example:**
+```go
+
+import (
+	"github.com/wallapop-go/pkg/api"
+	"github.com/wallapop-go/pkg/utils"
+)
+
+func main() {
+
 	// Create a new Wallapop Object
 	// Set the user ID, can be found in the URL of the user profile page
 	// Example: https://es.wallapop.com/app/user/ocasionplusg-437879034-8j3y83q89169/published
