@@ -10,7 +10,7 @@ import (
 	"github.com/wallapop-go/pkg/models"
 )
 
-const HERE_API_KEY = "AezPb11S9-e0_qFOWr7UaYnzzBCG0M2doKE05XbZXew"
+const HERE_API_KEY = "HERE_API_KEY"
 
 func HereGeoCoordinates(q string) models.Location {
 	apiKey := HERE_API_KEY
