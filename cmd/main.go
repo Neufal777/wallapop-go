@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/wallapop-go/pkg/api"
-	"github.com/wallapop-go/pkg/utils"
+	"github.com/Neufal777/wallapop-go/pkg/api"
+	"github.com/Neufal777/wallapop-go/pkg/utils"
 )
 
 func main() {

@@ -3,8 +3,8 @@ package api
 import (
 	"fmt"
 
-	"github.com/wallapop-go/pkg/http"
-	"github.com/wallapop-go/pkg/models"
+	"github.com/Neufal777/wallapop-go/pkg/http"
+	"github.com/Neufal777/wallapop-go/pkg/models"
 )
 
 type WallapopAPI struct {
@@ -25,7 +25,6 @@ func handleError(err error) {
 func (w *Wallapop) HttpWallapop(endpoint string, result interface{}) {
 	url := fmt.Sprintf("%s%s%s", API.UsersEndpoint, w.User.ID, endpoint)
 
-	fmt.Println(url)
 	err := http.GetAPIResponse(url, result, nil)
 	if err != nil {
 		handleError(err)

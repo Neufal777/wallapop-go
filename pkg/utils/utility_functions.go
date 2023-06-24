@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/Neufal777/wallapop-go/pkg/api"
+	"github.com/Neufal777/wallapop-go/pkg/http"
+	"github.com/Neufal777/wallapop-go/pkg/models"
 	"github.com/olekukonko/tablewriter"
-	"github.com/wallapop-go/pkg/api"
-	"github.com/wallapop-go/pkg/http"
-	"github.com/wallapop-go/pkg/models"
 )
 
 const (

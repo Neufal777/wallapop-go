@@ -8,10 +8,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/fatih/color"
-	"github.com/wallapop-go/pkg/http"
-	"github.com/wallapop-go/pkg/models"
-	"github.com/wallapop-go/pkg/services"
+	"github.com/Neufal777/wallapop-go/pkg/http"
+	"github.com/Neufal777/wallapop-go/pkg/models"
+	"github.com/Neufal777/wallapop-go/pkg/services"
 )
 
 const (
@@ -149,7 +148,6 @@ func (dow *Downloader) GetWallapopContent() *Downloader {
 	for i := 0; i < dow.Limit; i++ {
 		dow.Offset += 20
 		dow.GetWallapopContentPage()
-		color.Green("downloading page... %d of a total %d", i, dow.Limit)
 
 		time.Sleep(1 * time.Second)
 	}

@@ -1,6 +1,6 @@
 package api
 
-import "github.com/wallapop-go/pkg/models"
+import "github.com/Neufal777/wallapop-go/pkg/models"
 
 // ├── Setters  for 'wallapop'/
 // │   ├── SetWallapopItems()

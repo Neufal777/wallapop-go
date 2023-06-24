@@ -5,8 +5,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/Neufal777/wallapop-go/pkg/models"
 	"github.com/stretchr/testify/assert"
-	"github.com/wallapop-go/pkg/models"
 )
 
 func TestGetWallapopCategoryData(t *testing.T) {

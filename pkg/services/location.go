@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/wallapop-go/pkg/models"
+	"github.com/Neufal777/wallapop-go/pkg/models"
 )
 
 const HERE_API_KEY = "HERE_API_KEY"
